@@ -1,0 +1,177 @@
+﻿@page
+@model TimeshareUISolution.Pages.Admin.SignUpModel
+@{
+    Layout = "_Layout_NoHeader";
+}
+<div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+    <div class="outer-card bg-light d-flex">
+        <!-- Sign Up Card -->
+        <div class="card-container shadow">
+            <div class="card">
+                <div class="card-body">
+                    <label class="form-check-label" for="termsAgreement">
+                        Have an account?
+                        <a href="Login" class="terms-link">Sign In</a>.
+                    </label>
+                    <h5 class="card-title">Sign Up</h5>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="name" placeholder="Name">
+                                    <label for="name">Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                                    <label for="email">Email</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password">
+                            <label for="password">Confirm Password</label>
+                        </div>
+                        <div class="mb-3 form-check d-flex">
+                            <input type="checkbox" class="form-check-input" id="termsAgreement">
+                            <label class="form-check-label mb-0" for="termsAgreement">
+                                I have read and agree with the
+                                <a href="" class="terms-link">Terms and Conditions</a>.
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-signup w-100">Sign Up</button>
+                    </form>
+                    <div class="sign-up-option">Or sign up with</div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button class="btn btn-option w-100">
+                                <img src="~/img/google.png" alt="Google logo" class="img-with-padding">
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-option w-100">
+                                <img src="~/img/facebook.png" alt="Facebook logo" class="img-with-padding">
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-option w-100">
+                                <img src="~/img/apple-logo.png" alt="Apple logo" class="img-with-padding">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your existing sign-up form code goes here -->
+        </div>
+    </div>
+</div>
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+    .card-container {
+        border-radius: 20px; /* Added border-radius */
+        overflow: hidden;
+        font-family: 'Poppins', sans-serif;
+        width: 50%;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .card {
+        padding: 5px;
+        border-radius: 20px; /* Ensures consistent border-radius */
+        min-height: 500px;
+    }
+
+    .card-title {
+        padding: 20px 0; /* Added padding to the top and bottom */
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .outer-card {
+        font-family: 'Poppins', sans-serif;
+        width: 70%;
+        padding: 40px; /* Space around the inner card */
+        border-radius: 25px; /* Larger radius for the outer card */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+        display: flex; /* Align inner card to the left */
+        align-items: center; /* Center inner card vertically */
+        justify-content: flex-start; /* Start alignment */
+        min-height: 60vh; /* Minimum height for outer card */
+        background-image: url('https://i.postimg.cc/K8qgPdYh/wepik-export-20240204163338-EWm-K.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .card-container {
+        width: 50%; /* Adjust as needed */
+        height: 100%; /* Equal height */
+    }
+
+    .form-check .form-check-input {
+        width: 15px;
+        height: 15px;
+        margin-top: 0.3rem;
+        margin-left: 0;
+    }
+
+    .form-check-label {
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        border-radius: 12px; /* Adjusts the roundness */
+        /* Optional additional styles for a consistent look */
+        border: 1px solid #ced4da;
+        padding: .375rem .75rem;
+    }
+
+    .btn-signup {
+        padding: 0.9rem 1.5rem; /* Larger top/bottom and left/right padding */
+        font-size: 1rem; /* Keeping the text size the same */
+        border-radius:15px;
+    }
+
+    .sign-up-option {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: rgba(108, 117, 125, 0.5); /* Lighter text color with reduced opacity */
+        margin-top: 20px; /* Space above the text */
+        font-size: 0.9rem; /* Adjust the size as needed */
+        margin-bottom:20px;
+    }
+
+        .sign-up-option::before,
+        .sign-up-option::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(108, 117, 125, 0.5); /* Lighter line color with reduced opacity */
+            margin: 0px 10px; /* Space between the text and lines */
+        }
+
+    .btn-option{
+        border: 1px solid black;
+        border-radius: 15px;
+    }
+
+    .img-with-padding {
+        width: 30px;
+        height: 30px;
+        padding: 3px;
+    }
+
+</style>
+

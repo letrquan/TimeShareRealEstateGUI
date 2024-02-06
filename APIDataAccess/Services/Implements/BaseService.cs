@@ -1,14 +1,7 @@
 ﻿using APIDataAccess.DTO;
 using APIDataAccess.DTO.Odata;
 using APIDataAccess.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APIDataAccess.Services.Implements
 {
