@@ -6,21 +6,7 @@
 
 <section class="bg-light">
     <div class="container py-5">
-        <div class="row align-items-center">
-            <!-- Text Section -->
-            <div class="col-lg-6 mb-5 mb-lg-0">
-                <h1 class="display-3 fw-bold my-5">
-                    The best offer <br />
-                    <span class="text-primary">for your Trip</span>
-                </h1>
-                <p class="text-secondary">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Eveniet, itaque accusantium odio, soluta, corrupti aliquam
-                    quibusdam tempora at cupiditate quis eum maiores libero
-                    veritatis? Dicta facilis sint aliquid ipsum atque?
-                </p>
-            </div>
-
+        <div class="row align-items-center">     
             <!-- Form Section -->
             <div class="col-lg-5">
                 <div class="card" style="border-radius: 1em;">
@@ -115,7 +101,7 @@
                                         </g>
                                     </svg>
                                 </div>
-                            </div>
+                                </div>
 
                             <div class="inputGroup inputGroup1">
                                 <label for="email1">Email</label>
@@ -141,13 +127,21 @@
                     </div>
                 </div>
             </div>
+            <!-- Text Section -->
+            <div class="col-lg-6 mb-5 mb-lg-0" style="margin-left: 50px;">
+                <h6 class="display-3 fw-bold my-5">
+                    Timeshare<br/>
+                    <span style="color: #2eca6a;">We share, We care</span>
+                </h6>
+                <partial name="Partials/animated-signin"></partial>
+            </div>
         </div>
     </div>
 </section>
 
 
 <style>
-    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+    @@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
     a {
         text-decoration: none;
@@ -160,9 +154,9 @@
 
     body {
         background-image: url('https://img.freepik.com/free-vector/asian-rice-field-terraces-morning-mountains-landscape-paddy-plantation-cascades-farm-mount-water-channel-with-growing-plants-scenery-meadow-with-green-grass-cartoon-vector-illustration_107791-10452.jpg?w=1380&t=st=1707098432~exp=1707099032~hmac=7b063a62e593c9635ea6791d5aa8f680d2d6af4b9bfaa411b3b33c8805a4eee2');
-        background-size:cover;
+        background-size: cover;
         font-size: 16px;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Roboto', sans-serif;
         font-weight: 400;
         -webkit-font-smoothing: antialiased;
     }
@@ -172,13 +166,12 @@
         margin: 0;
         padding: 2.25em;
         box-sizing: border-box;
-        font-family: 'Source Sans Pro', sans-serif;
         .svgContainer
 
     {
         position: relative;
-        width: 200px;
-        height: 200px;
+        width: 150px;
+        height: 150px;
         margin: 0 auto 1em;
         border-radius: 50%;
         background: none;
@@ -271,7 +264,6 @@
         font-size: 1.55em;
         color: #FFF;
         font-weight: 600;
-        font-family: inherit;
         transition: background-color .2s ease-out;
         &:hover, &:active
 
@@ -287,7 +279,6 @@
     {
         position: absolute;
         z-index: 1;
-        font-family: inherit;
     }
 
     .helper1 {

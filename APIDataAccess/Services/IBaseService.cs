@@ -1,4 +1,4 @@
-﻿using APIDataAccess.DTO;
+﻿using APIDataAccess.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

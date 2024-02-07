@@ -10,7 +10,7 @@
 # General
 --------------------------------------------------------------*/
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #555555;
 }
 
@@ -2157,4 +2157,19 @@ footer .copyright-footer {
 
 footer .credits {
   font-size: 14px;
+}
+
+section{
+    display:grid;
+    place-items:center;
+    align-content:center;
+    min-height:100vh;
+}
+
+.hidden{
+    opacity:0;
+    transition:all 1s;
+}
+.show{
+    opacity:1;
 }

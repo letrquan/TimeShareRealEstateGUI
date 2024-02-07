@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace APIDataAccess.DTO.Odata
+namespace APIDataAccess.DTOs.Odata
 {
     public class OdataList<TModel>
     {

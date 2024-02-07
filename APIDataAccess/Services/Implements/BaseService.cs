@@ -1,5 +1,5 @@
-﻿using APIDataAccess.DTO;
-using APIDataAccess.DTO.Odata;
+﻿using APIDataAccess.DTOs;
+using APIDataAccess.DTOs.Odata;
 using APIDataAccess.Utils;
 using System.Net.Http.Json;
 
