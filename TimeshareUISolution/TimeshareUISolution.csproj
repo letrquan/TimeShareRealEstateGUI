@@ -11,4 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\APIDataAccess\APIDataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using System.Net.Http.Headers;
+using TimeshareUISolution.AppStats;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,20 @@ builder.Services.AddAuthentication(options =>
         //googleOptions.CallbackPath = "/signin-google";
 
     });
+
+#region AppStarts
+builder.Services.AddAutoMapper(typeof(AutoMapperResolver).Assembly);
+builder.Services.AddServices();
+#endregion
+
+#region Session
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+#endregion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,7 +62,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 app.UseAuthorization();
 

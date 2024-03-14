@@ -1,5 +1,6 @@
-﻿using APIDataAccess.DTOs;
-using APIDataAccess.DTOs.Odata;
+﻿using APIDataAccess.DTO;
+using APIDataAccess.DTO.Odata;
+using APIDataAccess.DTO.ResponseModels.Helpers;
 using APIDataAccess.Utils;
 using System.Net.Http.Json;
 
@@ -118,7 +119,7 @@ namespace APIDataAccess.Services.Implements
             return (result, responseMessage);
         }
 
-        public virtual async Task<ResponseMessage> Delete(string? path = null, Dictionary<string, string>? param = null, string? token = null)
+        public virtual async Task<ResponseResult<TModelRes>> Delete<TModelRes>(string? path = null, Dictionary<string, string>? param = null, string? token = null)
         {
             RequestUtils.AddTokenHeader(Client, token);
             if (Path != StoredURI.None)
@@ -130,10 +131,10 @@ namespace APIDataAccess.Services.Implements
             {
                 return null;
             }
-            ResponseMessage responseMessage = null;
+            ResponseResult<TModelRes> responseMessage = null;
             try
             {
-                responseMessage = await response.Content.ReadFromJsonAsync<ResponseMessage>();
+                responseMessage = await response.Content.ReadFromJsonAsync<ResponseResult<TModelRes>>();
             }
             catch (Exception ex)
             {
@@ -142,7 +143,7 @@ namespace APIDataAccess.Services.Implements
             return responseMessage;
         }
 
-        public virtual async Task<ResponseMessage> Put<TModel>(TModel model, string? path = null, Dictionary<string, string>? param = null, string? token = null)
+        public virtual async Task<ResponseResult<TModelRes>> Put<TModel, TModelRes>(TModel model, string? path = null, Dictionary<string, string>? param = null, string? token = null)
         {
             RequestUtils.AddTokenHeader(Client, token);
             if (Path != StoredURI.None)
@@ -154,10 +155,10 @@ namespace APIDataAccess.Services.Implements
             {
                 return null;
             }
-            ResponseMessage responseMessage = null;
+            ResponseResult<TModelRes> responseMessage = null;
             try
             {
-                responseMessage = await response.Content.ReadFromJsonAsync<ResponseMessage>();
+                responseMessage = await response.Content.ReadFromJsonAsync<ResponseResult<TModelRes>>();
             }
             catch (Exception ex)
             {
