@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIDataAccess.Utils
+namespace APIDataAccess.Services.IService
 {
-    public enum StoredURI
+    public interface IDepartmentService:IBaseService
     {
-        None,
-        Account,
-        Authenticate,
-        Department,
+
     }
 }

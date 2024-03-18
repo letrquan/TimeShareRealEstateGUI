@@ -15,4 +15,9 @@
     <ProjectReference Include="..\APIDataAccess\APIDataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Admin\Project\" />
+    <Folder Include="Pages\Admin\Owner\" />
+  </ItemGroup>
+
 </Project>
