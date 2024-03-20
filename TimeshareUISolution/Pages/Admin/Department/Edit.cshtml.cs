@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace TimeshareUISolution.Pages.User
+namespace TimeshareUISolution.Pages.Admin.Department
 {
-    public class IndexModel : PageModel
+    public class EditModel : PageModel
     {
-
         public void OnGet()
         {
         }
