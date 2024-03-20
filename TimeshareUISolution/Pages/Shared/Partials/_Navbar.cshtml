@@ -1,4 +1,25 @@
-﻿<nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
+﻿@using APIDataAccess.DTO.ResponseModels
+@using APIDataAccess.DTO.ResponseModels.Helpers
+@using Newtonsoft.Json
+
+@{
+    string? userRole = "";
+    UserLoginResponse? user = null;
+    if (Context != null)
+    {
+        userRole = Context.Session.GetString("UserRole");
+        var userStr = Context.Session.GetString("User");
+        if (userStr != null && userStr.Length > 0)
+        {
+            user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
+        }
+    }
+    if (userRole == null)
+    {
+        userRole = "";
+    }
+}
+<nav class="navbar navbar-default navbar-trans navbar-expand-lg fixed-top">
     <div class="container">
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span></span>
@@ -38,9 +59,24 @@
                 <li class="nav-item">
                     <a class="nav-link " href="contact.html">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link " asp-page="/Admin/Login">Login</a>
-                </li>
+
+                @if (user != null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link " asp-page="/Admin/Account/Update?accountId=@user.Value.AccountId">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " asp-page="/Admin/Logout">Logout</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link " asp-page="/Admin/Login">Login</a>
+                    </li>
+
+                }
+
             </ul>
         </div>
 

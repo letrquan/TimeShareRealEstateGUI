@@ -41,8 +41,70 @@ namespace APIDataAccess.Utils
                     return "RESTRICTED";
                 case 8:
                     return "EXPIRED";
-                case 9 :
+                case 9:
                     return "PENDING_APPROVAL";
+                default:
+                    return "DISABLED";
+            }
+        }
+        //contruct type to string
+        public static string ConstructionTypeToString(int? type)
+        {
+            switch (type)
+            {
+                case 1:
+                    return "RESORT";
+                case 2:
+                    return "BOUTIQUE_HOTEL";
+                case 3:
+                    return "MOTEL";
+                case 4:
+                    return "INN";
+                case 5:
+                    return "VACATION_RENTAL";
+                case 6:
+                    return "GUESTHOUSE";
+                case 7:
+                    return "LODGE";
+                case 8:
+                    return "COTTAGE";
+                case 9:
+                    return "APARTMENT_HOTEL";
+                case 10:
+                    return "BUNGALOW";
+                case 11:
+                    return "CHALET";
+                case 12:
+                    return "COUNTRY_HOUSE";
+                default:
+                    return "HOMESTAY";
+            }
+        }
+        //department status to string
+        public static string DepartmentStatusToString(int? status)
+        {
+            switch (status)
+            {
+                case 0:
+                    return "INACTIVE";
+                case 1:
+                    return "ACTIVE";
+                case 2:
+                    return "UNDER_CONSTRUCTION";
+                case 3:
+                    return "EXPANSION";
+                case 4:
+                    return "MERGED";
+                case 5:
+                    return "CLOSED";
+                case 6:
+                    return "PENDING_APPROVAL";
+                case 7:
+                    return "UNDER_REVIEW";
+                case 8:
+                    return "REORGANIZED";
+                case 9:
+                    return "TEMPORARY_SUSPENSION";
                 default:
                     return "DISABLED";
             }

@@ -12,5 +12,6 @@ namespace APIDataAccess.Utils
         Account,
         Authenticate,
         Department,
+        Owner,
     }
 }

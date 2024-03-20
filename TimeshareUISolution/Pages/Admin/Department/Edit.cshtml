@@ -1,4 +1,5 @@
 ﻿@page
+@using APIDataAccess.Utils
 @model TimeshareUISolution.Pages.Admin.Department.EditModel
 @{
     Layout = "_Layout_Admin";
@@ -6,47 +7,128 @@
 
 <div class="content-wrapper">
     <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
-            <!-- Sign Up Card -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Edit Department</h5>
-                        <form>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="name" placeholder="Name">
-                                        <label for="name">Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
-                                        <label for="email">Email</label>
-                                    </div>
-                                </div>
-                            </div>
+        <!-- Sign Up Card -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Edit Department</h5>
+                <form method="post">
+                    <input type="hidden" name="departmentId" value="@Model.Department.DepartmentId" />
+                    <input type="hidden" name="ownerId" value="@Model.Owner.OwnerId" />
+                    <div class="row">
+                        <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="password" placeholder="Password">
-                                <label for="password">Password</label>
+                                <input type="text" class="form-control" id="ownerName" placeholder="Owner Name" value="@Model.Owner.OwnerName" disabled>
+                                <label for="name">Owner Name</label>
                             </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password">
-                                <label for="password">Confirm Password</label>
+                                <input type="text" class="form-control" name="departmentName" placeholder="Department Name" value="@Model.Department.DepartmentName">
+                                <label for="email">Department Name</label>
                             </div>
-                            <div class="mb-3 form-check d-flex">
-                                <input type="checkbox" class="form-check-input" id="termsAgreement">
-                                <label class="form-check-label mb-0" for="termsAgreement">
-                                    I have read and agree with the
-                                    <a href="" class="terms-link">Terms and Conditions</a>.
-                                </label>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-signup w-100">Sign Up</button>
-                        </form>
+                        </div>
                     </div>
-                </div>
-                <!-- Your existing sign-up form code goes here -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="address" placeholder="Address" value="@Model.Department.Address">
+                        <label for="address">Address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="city" placeholder="City" value="@Model.Department.City">
+                        <label for="city">City</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="state" placeholder="State" value="@Model.Department.State">
+                                <label for="state">State</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="country" placeholder="Country" value="@Model.Department.Country">
+                                <label for="country">Country</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" name="capacity" placeholder="Capacity" value="@Model.Department.Capacity">
+                                <label for="capacity">Capacity</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" name="floor" placeholder="Floors" value="@Model.Department.Floors">
+                                <label for="floor">Floors</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" name="price" placeholder="Price" value="@Model.Department.Price">
+                                <label for="price">Price</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <select id="constructionType" name="constructionType" class="select2 form-select">
+                                    @{
+                                        foreach (var item in Model.Enum)
+                                        {
+                                            if (item.Key == Model.Department.ConstructionType)
+                                            {
+                                                <option selected value="@item.Key">
+                                                    @item.Value
+                                                </option>
+                                            }
+
+                                            {
+                                                <option value="@item.Key">
+                                                    @item.Value
+                                                </option>
+                                            }
+
+                                        }
+                                    }
+                                </select>
+                                <label for="constructionType">Construction Type</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="description" placeholder="Description" value="@Model.Department.Description">
+                        <label for="city">Description</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select id="status" name="status" class="select2 form-select">
+                            @{
+                                foreach (var item in Model.Status)
+                                {
+                                    if (item.Key == Model.Department.Status)
+                                    {
+                                        <option selected value="@item.Key">
+                                            @item.Value
+                                        </option>
+                                    }
+
+                                    {
+                                        <option value="@item.Key">
+                                            @item.Value
+                                        </option>
+                                    }
+
+                                }
+                            }
+                        </select>
+                        <label for="city">Status</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-signup w-100">Save</button>
+                </form>
             </div>
         </div>
+        <!-- Your existing sign-up form code goes here -->
+    </div>
+</div>
 
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
@@ -79,7 +161,7 @@
         padding: 5px;
         border-radius: 20px; /* Ensures consistent border-radius */
         min-height: 500px;
-        width:80%;
+        width: 80%;
     }
 
     .card-title {
@@ -170,3 +252,29 @@
     }
 
 </style>
+@if (TempData["successMessage"] != null)
+{
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '@TempData["successMessage"]',
+            showConfirmButton: true,
+            timer: null,
+            allowOutsideClick: false
+        })
+    </script>
+}
+@if (TempData["errorMessage"] != null)
+{
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '@TempData["errorMessage"]',
+            showConfirmButton: true,
+            timer: null,
+            allowOutsideClick: false
+        })
+    </script>
+}
