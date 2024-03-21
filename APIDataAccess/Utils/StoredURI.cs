@@ -13,6 +13,7 @@ namespace APIDataAccess.Utils
         Authenticate,
         Department,
         Owner,
+        Facility,
         AvailableTime,
         Reservation,
     }
