@@ -6,6 +6,81 @@ using System.Threading.Tasks;
 
 namespace APIDataAccess.Utils
 {
+    #region filter order
+    public enum Month
+    {
+        January = 1,
+        February,
+        March,
+        April,
+        May,
+        June,
+        July,
+        August,
+        September,
+        October,
+        November,
+        December,
+    }
+    public enum SortOrder
+    {
+        Ascending,
+        Descending,
+    }
+
+    public enum AccountOrderFilter
+    {
+        AccountId,
+        FirstName,
+        LastName,
+        FullName,
+        Phone,
+        City,
+        State,
+        Country,
+        Address,
+        Role,
+        Email,
+        Password,
+        Status,
+        TotalRevenue,
+        TotalCommission,
+
+    }
+
+    public enum ProjectOrderFilter
+    {
+        ProjectId,
+        ProjectName,
+        PriorityType,
+        ProjectCode,
+        TotalSlot,
+        StartDate,
+        EndDate,
+        Status,
+        RegistrationEndDate,
+        RegistrationOpeningDate,
+        TotalRevenue
+    }
+
+    public enum DepartmentFilter
+    {
+        DepartmentId,
+        DepartmentName,
+        OwnerId,
+        Address,
+        City,
+        State,
+        Country,
+        Floors,
+        Price,
+        ConstructionType,
+        Description,
+        Status,
+        Capacity,
+        TotalRevenue,
+    }
+    #endregion
     public enum AccountRole
     {
         NULL,
@@ -127,12 +202,17 @@ namespace APIDataAccess.Utils
 
     public enum FacilityType
     {
-        AIR,
-        TV,
-        WASHING_MACHINE,
-        SECURITY,
-        CAMERA,
-        SINK,
+        AIR = 0,
+        TV = 1,
+        WASHING_MACHINE = 2,
+        SECURITY = 3,
+        CAMERA = 4,
+        SINK = 5,
+        CHAIR = 6,
+        LOCKER = 7,
+        BED = 8,
+        TABLE = 9,
+
     }
 
     public enum OwnerStatus
@@ -153,16 +233,16 @@ namespace APIDataAccess.Utils
     {
         DISABLE,
         ACTIVE,
-        CONFIRMED, //XÁC NHẬN
-        PENDING, //Chờ xử lý
+        CONFIRMED, //XÁC NHẬN 3
+        PENDING, //Chờ xử lý 1
         CANCELLED,
         COMPLETED,
-        WAITLISTED, //Đang đợi xác nhận
+        WAITLISTED, //Đang đợi xác nhận 2
         CHECKED_IN, //Đã nhận phòng
         CHECKED_OUT, //Đã trả phòng
-        IN_PROGRESS, //Chờ thanh toán
+        IN_PROGRESS, //Chờ thanh toán 4
         NO_SHOW, //Khách không xuất hiện
-        ON_HOLD, //Đã giữ chỗ 
+        ON_HOLD, //Đã giữ chỗ 5
     }
 
     public enum UsageHistoryStatus
