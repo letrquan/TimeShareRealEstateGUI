@@ -15,6 +15,7 @@ namespace APIDataAccess.DTO.RequestModels
         public int AvailableTimeId { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime ReservationDate { get; set; }
+        [RegularExpression(@"^(?=.*[0-9])\d+$", ErrorMessage = "Reservation fee is Invalid!")]
         public decimal? ReservationFee { get; set; }
         public int? Status { get; set; }
     }
