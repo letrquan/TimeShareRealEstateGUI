@@ -46,7 +46,15 @@ namespace TimeshareUISolution.Pages.Admin
             var response = _authenticateService.PostWithResponse<UserLoginResponse>(path: $"/Login/{Email}/{Password}").Result;
             if (response.Item1 != null)
             {
-                account = response.Item1;
+                if(response.Item1.Value != null)
+                {
+                    account = response.Item1;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = response.Item1.Message;
+                    return Page();
+                }
                 HttpContext.Session.SetString("User", JsonConvert.SerializeObject(account));
                 HttpContext.Session.SetString("UserRole", account.Value.Role.ToString());
                 switch (account.Value.Role)
@@ -67,7 +75,7 @@ namespace TimeshareUISolution.Pages.Admin
                 {
                     return Redirect($"/Error/500");
                 }
-                ErrorMessage = response.Item2.Title;
+                TempData["ErrorMessage"] = response.Item2.Title;
                 return Page();
             }
         }
