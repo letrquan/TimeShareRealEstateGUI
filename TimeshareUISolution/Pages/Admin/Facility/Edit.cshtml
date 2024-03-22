@@ -12,21 +12,27 @@
             <div class="card-body">
                 <h5 class="card-title">Edit Facility</h5>
                 <form method="post">
-                    <input type="text" name="FacilityId" value="@Model.Facility.FacilityId" />
-                    <input type="hidden" name="departmentId" value="@Model.Department.DepartmentId" />
+                    <input type="text" name="FacilityId" value="@Model.Facility.FacilityId" hidden />
+                    @* <input type="hidden" name="departmentId" value="@Model.Department.DepartmentId" /> *@
                     <div class="row">
-                        
-                        <div class="col-md-6">
-                            <div class="form-floating mb-3">
+
+                        <div class="col-md-12">
+                            <div class="form-floating mb-6">
                                 <input type="text" class="form-control" name="FacilityName" placeholder="Facility Name" value="@Model.Facility.FacilityName">
                                 <label for="email">Facility Name</label>
                             </div>
                         </div>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="description" placeholder="Description" value="@Model.Facility.Description">
-                        <label for="description">Description</label>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-floating mb-6">
+                                <input type="text" class="form-control" name="description" placeholder="Description" value="@Model.Facility.Description">
+                                <label for="description">Description</label>
+                            </div>
+                        </div>
                     </div>
+                    <br>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-floating mb-3">
@@ -34,13 +40,9 @@
                                 <label for="image">Image</label>
                             </div>
                         </div>
-                        
-                    </div>
-                    <div class="row">
-                        
                         <div class="col-md-4">
                             <div class="form-floating mb-3">
-                                <select id="constructionType" name="constructionType" class="select2 form-select">
+                                <select id="FacilityType" name="FacilityType" class="select2 form-select">
                                     @{
                                         foreach (var item in Model.Enum)
                                         {
@@ -63,9 +65,6 @@
                                 <label for="facilityType">Facility Type</label>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        
                         <div class="col-md-4">
                             <div class="form-floating mb-3">
                                 <select id="departmentId" name="departmentId" class="select2 form-select">
@@ -92,11 +91,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-floating mb-3">
-                        <textarea type="text" class="form-control" name="description" placeholder="Description" value="@Model.Facility.Description"></textarea>
-                        <label for="city">Description</label>
-                    </div>
-                    
+
+
                     <button type="submit" class="btn btn-primary btn-signup w-100">Save</button>
                 </form>
             </div>
