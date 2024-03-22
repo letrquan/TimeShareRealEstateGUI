@@ -124,15 +124,37 @@
                     </div>
                     <button type="submit" class="btn btn-primary btn-signup w-100">Save</button>
                 </form>
-                <form method="post" asp-page-handler="Delete" style="padding-top:10px;">
-                    <input type="hidden" name="deleteid" value="@Model.Department.DepartmentId" />
-                    <button type="submit" class="btn btn-danger btn-signup w-100">Delete</button>
+                <form method="post" id="deleteForm" asp-page-handler="Delete" style="padding-top:10px;">
+                    <input type="hidden" name="deleteId" id="deleteId"/>
+                    <a class="btn btn-danger btn-signup w-100" onclick="deleteBtn(@Model.Department.DepartmentId)">Delete</a>
                 </form>
             </div>
         </div>
         <!-- Your existing sign-up form code goes here -->
     </div>
 </div>
+<script>
+    const deleteForm = document.getElementById('deleteForm');
+    var deleteInput = document.getElementById('deleteId');
+    // Click handler
+    function deleteBtn(deleteId) {
+        Swal.fire({
+            title: 'Bạn chắc chắn không?',
+            text: "",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Có'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteInput.value = deleteId;
+                // Submit form if user confirmed
+                deleteForm.submit();
+            }
+        })
+    }
+</script>
 
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
