@@ -1,4 +1,6 @@
 ﻿using APIDataAccess.DTO.RequestModels;
+using APIDataAccess.DTO.ResponseModels.Helpers;
+using APIDataAccess.DTO.ResponseModels;
 using APIDataAccess.Helpers;
 using APIDataAccess.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +12,7 @@ namespace TimeshareUISolution.Pages.Admin
     public class VerifyModel : PageModel
     {
         private static AccountRequestModel AccountRequestModel { get; set; }
+        public string Message { get; set; }
         public IActionResult OnGet(string request)
         {
 
@@ -26,14 +29,18 @@ namespace TimeshareUISolution.Pages.Admin
             }else
             {
                 AccountRequestModel.Status = (int)AccountStatus.PENDING_APPROVAL;
+                HelperFeature.Instance.CallApiAsyncPost("https://localhost:7246/api/Notification/SendMailNotification/" + AccountRequestModel.Email + "/" + "Tài khoản đang chờ duyệt!",
+                 "", "Tài khoản đang chờ duyệt, chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất!");
+            }
 
-                var test = HelperFeature.Instance.CallApiAsyncPost("https://localhost:7246/api/Notification/SendMailNotification/" + AccountRequestModel.Email + "/" + "Tài khoản đang chờ duyệt!", 
-                   "", "Tài khoản đang chờ duyệt, chúng tôi sẽ liên hệ bạn trong thời gian sớm nhất!").Result;
-                string s = "s";
+            var data = HelperFeature.Instance.CallApiAsyncPost("https://localhost:7246/api/Authenticate/Register/" + opt, "", AccountRequestModel).Result;
+
+            if (!JsonConvert.DeserializeObject<ResponseResult<AccountViewModel>>(data).Message.Equals("Create Success"))
+            {
+                return RedirectToPage("SignUp", new { message = "Đăng ký không thành công!" });
 
             }
 
-            HelperFeature.Instance.CallApiAsyncPost("https://localhost:7246/api/Authenticate/Register/" + opt, "", AccountRequestModel);
             return RedirectToPage("Login");
         }
     }
