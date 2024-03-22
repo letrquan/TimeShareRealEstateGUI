@@ -16,9 +16,14 @@ namespace TimeshareUISolution.Pages.Admin.Department
         {
             _service = service;
         }
+        public int PageNumber { get; set; }
         public List<DepartmentViewModel> DepartmentList { get; set; }
-        public IActionResult OnGet()
+        public IActionResult OnGet(int pageNumber)
         {
+            if (pageNumber <= 0 || pageNumber == null)
+            {
+                pageNumber = 1;
+            }
             var userStr = HttpContext.Session.GetString("User");
             if (userStr == null || userStr.Count() == 0)
             {
@@ -33,12 +38,13 @@ namespace TimeshareUISolution.Pages.Admin.Department
             {
                 return RedirectToPage("/Admin/Login");
             }
-            var response = _service.GetModelAsync<DynamicModelsResponse<DepartmentViewModel>>(path: "/GetListDepartment", token: user.AccessToken).Result;
+            var response = _service.GetModelAsync<DynamicModelsResponse<DepartmentViewModel>>(path: $"/GetListDepartment?page={pageNumber}&pageSize=3", token: user.AccessToken).Result;
             if(response.Item1 != null)
             {
                 if(response.Item1 != null)
                 {
                     DepartmentList = response.Item1.Results;
+                    PageNumber = response.Item1.Metadata.Page;
                 }
                 else
                 {

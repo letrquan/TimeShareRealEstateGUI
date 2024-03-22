@@ -151,5 +151,42 @@ namespace TimeshareUISolution.Pages.Admin.Department
             }
         }
 
+        public IActionResult OnPostDelete(string deleteid)
+        {
+            var userStr = HttpContext.Session.GetString("User");
+            if (userStr == null || userStr.Count() == 0)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            var user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
+            if (user == null)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            if (user.Value.Role != ((int)AccountRole.ADMIN) && user.Value.Role != ((int)AccountRole.STAFF))
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            var response = _service.Delete<ResponseResult<DepartmentViewModel>>(path: $"/DeleteDepartment/{deleteid}", token: user.AccessToken).Result;
+            if(response != null)
+            {
+                if(response.result == true)
+                {
+                    TempData["successMessage"] = response.Message;
+                    return RedirectToPage("/Admin/Department/Index");
+                }
+                else
+                {
+                    TempData["errorMessage"] = response.Message;
+                    return RedirectToPage("/Admin/Department/Index");
+                }
+            }
+            else
+            {
+                TempData["errorMessage"] = "Server error";
+                OnGet(deleteid);
+                return Page();
+            }
+        }
     }
 }

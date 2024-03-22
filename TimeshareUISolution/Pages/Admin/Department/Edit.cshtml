@@ -8,7 +8,7 @@
 <div class="content-wrapper">
     <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
         <!-- Sign Up Card -->
-        <div class="card">
+        <div class="card" style="padding:10px;">
             <div class="card-body">
                 <h5 class="card-title">Edit Department</h5>
                 <form method="post">
@@ -123,6 +123,10 @@
                         <label for="city">Status</label>
                     </div>
                     <button type="submit" class="btn btn-primary btn-signup w-100">Save</button>
+                </form>
+                <form method="post" asp-page-handler="Delete" style="padding-top:10px;">
+                    <input type="hidden" name="deleteid" value="@Model.Department.DepartmentId" />
+                    <button type="submit" class="btn btn-danger btn-signup w-100">Delete</button>
                 </form>
             </div>
         </div>

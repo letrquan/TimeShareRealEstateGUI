@@ -17,5 +17,6 @@ namespace APIDataAccess.Utils
         Facility,
         AvailableTime,
         Reservation,
+        Notification,
     }
 }
