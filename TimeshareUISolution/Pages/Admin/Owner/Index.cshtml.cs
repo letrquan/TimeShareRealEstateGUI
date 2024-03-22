@@ -13,7 +13,8 @@ namespace TimeshareUISolution.Pages.Admin.Owner
     {
         private readonly IOwnerService _service;
         public static int CurrentPage { get; set; }
-        public static int TotalPage { get; set; } = 3;
+        public static int TotalPage { get; set; }
+        public int PageSize { get; set; } = 3;
         public IndexModel(IOwnerService service)
         {
             _service = service;
