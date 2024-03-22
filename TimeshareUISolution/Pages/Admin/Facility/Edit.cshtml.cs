@@ -116,54 +116,55 @@ namespace TimeshareUISolution.Pages.Admin.Facility
                 return Page();
             }
         }
-        //public IActionResult OnPost(int facilityId, string facilityName, string description, int facilityType, int departmentId, string image)
-        //{
-        //    var userStr = HttpContext.Session.GetString("User");
-        //    if (userStr == null || userStr.Count() == 0)
-        //    {
-        //        return RedirectToPage("/Admin/Login");
-        //    }
-        //    var user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
-        //    if (user == null)
-        //    {
-        //        return RedirectToPage("/Admin/Login");
-        //    }
-        //    if (user.Value.Role != ((int)AccountRole.ADMIN) && user.Value.Role != ((int)AccountRole.STAFF))
-        //    {
-        //        return RedirectToPage("/Admin/Login");
-        //    }
-        //    var update = new FacilityRequestModel
-        //    {
-        //        FacilityId = facilityId,
-        //        FacilityName = facilityName,
-        //        Description = description,
-        //        FacilityType = int.Parse(Request.Form["FacilityType"]),
-        //        DepartmentId = departmentId,
-        //        Image = image,
-                
-        //    };
-        //    var response = _service.Put<FacilityRequestModel, FacilityViewModel>(update, path: $"/UpdateFacility/{facilityId}", token: user.AccessToken).Result;
-        //    if (response != null)
-        //    {
-        //        if (response.result == true)
-        //        {
-        //            TempData["successMessage"] = response.Message;
-        //            return Redirect($"/Admin/Facility/Edit?FacilityId={facilityId}");
-        //        }
-        //        else
-        //        {
-        //            OnGet(facilityId.ToString());
-        //            TempData["errorMessage"] = response.Message;
-        //            return Page();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        OnGet(facilityId.ToString());
-        //        TempData["errorMessage"] = "Server error";
-        //        return Page();
-        //    }
-        //}
+        public IActionResult OnPost(int facilityId, string facilityName, string description, int facilityType, int departmentId, string image)
+        {
+            var userStr = HttpContext.Session.GetString("User");
+            if (userStr == null || userStr.Count() == 0)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            var user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
+            if (user == null)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            if (user.Value.Role != ((int)AccountRole.ADMIN) && user.Value.Role != ((int)AccountRole.STAFF))
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            var update = new FacilityRequestModel
+            {
+                FacilityId = facilityId,
+                FacilityName = facilityName,
+                Description = description,
+                FacilityType = int.Parse(s: Request.Form["FacilityType"]),
+                DepartmentId = int.Parse(s: Request.Form["departmentId"]),
+                Image = image,
+
+            };
+            var response = _service.Put<FacilityRequestModel, FacilityViewModel>(update, path: $"/UpdateFacility/{facilityId}", token: user.AccessToken).Result;
+            if (response != null)
+            {
+                if (response.result == true)
+                {
+                    TempData["successMessage"] = response.Message;
+                    return RedirectToPage("Index");
+                    //return Redirect($"/Admin/Facility/Edit?FacilityId={facilityId}");
+                }
+                else
+                {
+                    OnGet(facilityId.ToString());
+                    TempData["errorMessage"] = response.Message;
+                    return Page();
+                }
+            }
+            else
+            {
+                OnGet(facilityId.ToString());
+                TempData["errorMessage"] = "Server error";
+                return Page();
+            }
+        }
 
     }
 }

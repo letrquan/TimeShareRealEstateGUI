@@ -2,24 +2,23 @@ using APIDataAccess.DTO.ResponseModels;
 using APIDataAccess.DTO.ResponseModels.Helpers;
 using APIDataAccess.Services.IService;
 using APIDataAccess.Utils;
-using AutoMapper.Execution;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using static APIDataAccess.DTO.ResponseModels.Helpers.DynamicModelResponse;
 
-namespace TimeshareUISolution.Pages.Admin.Facility
+namespace TimeshareUISolution.Pages.Admin.Owner
 {
     public class IndexModel : PageModel
     {
-        private readonly IFacilityService _service;
+        private readonly IOwnerService _service;
         public static int CurrentPage { get; set; }
         public static int TotalPage { get; set; }
-        public IndexModel(IFacilityService service)
+        public IndexModel(IOwnerService service)
         {
             _service = service;
         }
-        public List<FacilityViewModel> FacilityList { get; set; }
+        public List<OwnerViewModel> OwnerList { get; set; }
         public IActionResult OnGet(string? number = null, string? filter = null)
         {
             CurrentPage = int.Parse(number != null ? number : "1");
@@ -40,15 +39,15 @@ namespace TimeshareUISolution.Pages.Admin.Facility
             {
                 return RedirectToPage("/Admin/Login");
             }
-            var response = _service.GetModelAsync<DynamicModelsResponse<FacilityViewModel>>
-                (path: "/GetListFacility?FacilityName=" + filter + "&page=" + CurrentPage, token: user.AccessToken).Result;
+            var response = _service.GetModelAsync<DynamicModelsResponse<OwnerViewModel>>
+                (path: "/GetListOwner?OwnerName=" + filter + "&page=" + CurrentPage, token: user.AccessToken).Result;
 
             TotalPage = (int)MathF.Ceiling((float)response.Item1.Metadata.Total / (float)response.Item1.Metadata.Size);
             if (response.Item1 != null)
             {
                 if (response.Item1 != null)
                 {
-                    FacilityList = response.Item1.Results;
+                    OwnerList = response.Item1.Results;
                 }
                 else
                 {

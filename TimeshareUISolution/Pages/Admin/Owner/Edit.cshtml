@@ -1,6 +1,6 @@
 ﻿@page
 @using APIDataAccess.Utils
-@model TimeshareUISolution.Pages.Admin.Facility.EditModel
+@model TimeshareUISolution.Pages.Admin.Owner.EditModel
 @{
     Layout = "_Layout_Admin";
 }
@@ -10,16 +10,21 @@
         <!-- Sign Up Card -->
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Edit Facility</h5>
+                <h5 class="card-title">Edit Owner</h5>
                 <form method="post">
-                    <input type="text" name="FacilityId" value="@Model.Facility.FacilityId" hidden />
-                    @* <input type="hidden" name="departmentId" value="@Model.Department.DepartmentId" /> *@
+                    <input type="text" name="OwnerId" value="@Model.Owner.OwnerId" hidden />
+                    @* <input type="hidden" name="departmentId" value="@Model.Owner.OwnerId" /> *@
                     <div class="row">
 
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-floating mb-6">
-                                <input type="text" class="form-control" name="FacilityName" placeholder="Facility Name" value="@Model.Facility.FacilityName">
-                                <label for="email">Facility Name</label>
+                                <input type="text" class="form-control" name="OwnerName" placeholder="Owner Name" value="@Model.Owner.OwnerName">
+                                <label for="ownerName">Owner Name</label>
+                            </div>
+                        </div><div class="col-md-6">
+                            <div class="form-floating mb-6">
+                                <input type="text" class="form-control" name="ContactPerson" placeholder="Contact Person" value="@Model.Owner.ContactPerson">
+                                <label for="contactPerson">Contact Person</label>
                             </div>
                         </div>
                     </div>
@@ -27,8 +32,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-floating mb-6">
-                                <input type="text" class="form-control" name="description" placeholder="Description" value="@Model.Facility.Description">
-                                <label for="description">Description</label>
+                                <input type="text" class="form-control" name="Email" placeholder="Email" value="@Model.Owner.Email">
+                                <label for="email">Email</label>
                             </div>
                         </div>
                     </div>
@@ -36,60 +41,34 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="image" placeholder="Image" value="@Model.Facility.Image">
-                                <label for="image">Image</label>
+                                <input type="text" class="form-control" name="phone" placeholder="Phone" value="@Model.Owner.Phone">
+                                <label for="phone">Phone</label>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-floating mb-3">
-                                <select id="FacilityType" name="FacilityType" class="select2 form-select">
-                                    @{
-                                        foreach (var item in Model.Enum)
+                        <div class="form-floating mb-3">
+                            <select id="status" name="status" class="select2 form-select">
+                                @{
+                                    foreach (var item in Model.Status)
+                                    {
+                                        if (item.Key == Model.Owner.Status)
                                         {
-                                            if (item.Key == Model.Facility.FacilityType)
-                                            {
-                                                <option selected value="@item.Key">
-                                                    @item.Value
-                                                </option>
-                                            }
-
-                                            {
-                                                <option value="@item.Key">
-                                                    @item.Value
-                                                </option>
-                                            }
-
+                                            <option selected value="@item.Key">
+                                                @item.Value
+                                            </option>
                                         }
-                                    }
-                                </select>
-                                <label for="facilityType">Facility Type</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-floating mb-3">
-                                <select id="departmentId" name="departmentId" class="select2 form-select">
-                                    @{
-                                        foreach (var item in Model.DepartmentList)
+
                                         {
-                                            if (item.DepartmentId == Model.Facility.DepartmentId)
-                                            {
-                                                <option selected value="@item.DepartmentId">
-                                                    @item.DepartmentName
-                                                </option>
-                                            }
-
-                                            {
-                                                <option value="@item.DepartmentId">
-                                                    @item.DepartmentName
-                                                </option>
-                                            }
-
+                                            <option value="@item.Key">
+                                                @item.Value
+                                            </option>
                                         }
+
                                     }
-                                </select>
-                                <label for="facilityType">Department</label>
-                            </div>
+                                }
+                            </select>
+                            <label for="status">Status</label>
                         </div>
+                        
                     </div>
 
 

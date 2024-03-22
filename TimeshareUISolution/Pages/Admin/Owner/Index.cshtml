@@ -1,12 +1,12 @@
 ﻿@page
 @using APIDataAccess.Utils
-@model TimeshareUISolution.Pages.Admin.Facility.IndexModel
+@model TimeshareUISolution.Pages.Admin.Owner.IndexModel
 @{
     Layout = "_Layout_Admin";
 }
 
 
-<h3 class="card-header">Facilities</h3>
+<h3 class="card-header">Owners</h3>
 
 <div class="search-bar">
     <div class="card location">
@@ -27,7 +27,6 @@
         </select>
         <div class="rooms">
             <span>Room</span>
-            <a asp-route-number="@(IndexModel.CurrentPage == 1? 1 : IndexModel.CurrentPage - 1)">@(IndexModel.CurrentPage == 1 ? 1 : IndexModel.CurrentPage - 1)-</a>
             <a asp-route-number="@IndexModel.CurrentPage" class="active">@IndexModel.CurrentPage</a>
             <a asp-route-number="@(IndexModel.CurrentPage + 1)">@(IndexModel.CurrentPage + 1)+</a>
         </div>
@@ -45,22 +44,20 @@
 <div class="results">
     <div class="best-options">
         @{
-            if (Model.FacilityList != null && Model.FacilityList.Any())
+            if (Model.OwnerList != null && Model.OwnerList.Any())
             {
-                foreach (var facility in Model.FacilityList)
+                foreach (var owner in Model.OwnerList)
                 {
-                    <a href="/Admin/Facility/Edit?facilityId=@facility.FacilityId">
+                    <a href="/Admin/Owner/Edit?ownerId=@owner.OwnerId">
                         <div class="property-card">
-                            <div class="property-image">
-                                <img src="@facility.Image" alt="Property Image">
-                                <span class="status">New</span>
-                            </div>
                             <div class="property-details">
-                                <h4>@facility.FacilityName</h4>
-                                <p>@facility.Description</p>
+                                <h4>@owner.OwnerName</h4>
+                                <p>@owner.ContactPerson</p>
                                 <div class="info">
-                                    <p><span class="icon">Category: @Enum.GetValues(typeof(FacilityType)).GetValue(Convert.ToInt64(facility.FacilityType))  </span> &nbsp;&nbsp; 
-                                    <span class="icon">Department: @facility.DepartmentId</span> &nbsp;&nbsp; 
+                                    <p>
+                                        <span class="icon">Status: @Enum.GetValues(typeof(OwnerStatus)).GetValue(Convert.ToInt64(owner.Status))  </span> &nbsp;&nbsp;
+                                        <span class="icon">Email: @owner.Email</span> &nbsp;&nbsp;
+                                        <span class="icon">Phone: @owner.Phone</span> &nbsp;&nbsp;
                                 </div>
                             </div>
                         </div>
