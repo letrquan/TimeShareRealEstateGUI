@@ -12,13 +12,19 @@ namespace TimeshareUISolution.Pages.Admin.Owner
     public class IndexModel : PageModel
     {
         private readonly IOwnerService _service;
+        public static int CurrentPage { get; set; }
+        public static int TotalPage { get; set; }
         public IndexModel(IOwnerService service)
         {
             _service = service;
         }
         public List<OwnerViewModel> OwnerList { get; set; }
-        public IActionResult OnGet()
+        public IActionResult OnGet(string? number = null, string? filter = null)
         {
+            CurrentPage = int.Parse(number != null ? number : "1");
+
+            CurrentPage = (CurrentPage < 1) ? 1 : CurrentPage;
+            CurrentPage = (CurrentPage > TotalPage && TotalPage != 0 ? TotalPage : CurrentPage);
             var userStr = HttpContext.Session.GetString("User");
             if (userStr == null || userStr.Count() == 0)
             {
@@ -33,7 +39,8 @@ namespace TimeshareUISolution.Pages.Admin.Owner
             {
                 return RedirectToPage("/Admin/Login");
             }
-            var response = _service.GetModelAsync<DynamicModelsResponse<OwnerViewModel>>(path: "/GetListOwner", token: user.AccessToken).Result;
+            var response = _service.GetModelAsync<DynamicModelsResponse<OwnerViewModel>>
+                (path: "/GetListOwner?OwnerName=" + filter + "&page=" + CurrentPage, token: user.AccessToken).Result;
             if (response.Item1 != null)
             {
                 if (response.Item1 != null)

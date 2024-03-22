@@ -12,13 +12,21 @@ namespace TimeshareUISolution.Pages.Admin.Department
     public class IndexModel : PageModel
     {
         private readonly IDepartmentService _service;
+        public static int CurrentPage { get; set; }
+        public static int TotalPage { get; set; }
         public IndexModel(IDepartmentService service)
         {
             _service = service;
         }
         public List<DepartmentViewModel> DepartmentList { get; set; }
-        public IActionResult OnGet()
+        public IActionResult OnGet(string? number = null, string? filter = null)
         {
+
+            CurrentPage = int.Parse(number != null ? number : "1");
+
+            CurrentPage = (CurrentPage < 1) ? 1 : CurrentPage;
+            CurrentPage = (CurrentPage > TotalPage && TotalPage != 0 ? TotalPage : CurrentPage);
+
             var userStr = HttpContext.Session.GetString("User");
             if (userStr == null || userStr.Count() == 0)
             {
@@ -33,8 +41,12 @@ namespace TimeshareUISolution.Pages.Admin.Department
             {
                 return RedirectToPage("/Admin/Login");
             }
-            var response = _service.GetModelAsync<DynamicModelsResponse<DepartmentViewModel>>(path: "/GetListDepartment", token: user.AccessToken).Result;
-            if(response.Item1 != null)
+            var response = _service.GetModelAsync<DynamicModelsResponse<DepartmentViewModel>>
+                (path: "/GetListDepartment?DepartmentName=" + filter + "&" + "page="  + CurrentPage, token: user.AccessToken).Result;
+
+            TotalPage = (int)MathF.Ceiling((float)response.Item1.Metadata.Total / (float)response.Item1.Metadata.Size);
+
+            if (response.Item1 != null)
             {
                 if(response.Item1 != null)
                 {
@@ -50,6 +62,12 @@ namespace TimeshareUISolution.Pages.Admin.Department
                 
             }
             return Page();
+        }
+
+        public IActionResult OnPostSearch()
+        {
+            string search = Request.Form["search"];
+            return OnGet(filter: search);
         }
     }
 }
