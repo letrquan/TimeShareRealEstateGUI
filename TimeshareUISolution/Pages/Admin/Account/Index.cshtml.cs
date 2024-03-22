@@ -24,7 +24,7 @@ namespace TimeshareUISolution.Pages.Admin.Account
         {
             _service = service;
         }
-        public IActionResult OnGet(string? number)
+        public IActionResult OnGet(string? number = null, string? filter = null)
         {
             CurrentPage = int.Parse(number != null ? number : "1"); 
 
@@ -45,7 +45,10 @@ namespace TimeshareUISolution.Pages.Admin.Account
             {
                 return RedirectToPage("/Admin/Login");
             }
-            var accountRespone = _service.GetModelAsync<DynamicModelsResponse<AccountViewModel>>(path: "/GetListAccount?page=" + CurrentPage, token: user.AccessToken).Result;
+            //https://localhost:7246/api/Account/GetListAccount?FirstName=2&page=1
+            var accountRespone = _service.GetModelAsync<DynamicModelsResponse<AccountViewModel>>
+                (path: "/GetListAccount?FullName=" + filter + "&" + "page=" + CurrentPage, token: user.AccessToken).Result;
+
             if (accountRespone.Item1 != null)
             {
                 if(accountRespone.Item1.Results != null)
@@ -131,6 +134,13 @@ namespace TimeshareUISolution.Pages.Admin.Account
                 TempData["errorMessage"] = "Server error";
             }
             return Page();
+        }
+
+        public IActionResult OnPostSearch()
+        {
+            string search = Request.Form["search"];
+            return OnGet(filter: search);
+
         }
     }
 }
