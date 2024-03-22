@@ -69,6 +69,7 @@
                                                     <div class="dropdown-menu">
                                                         <a class="dropdown-item" href="~/Admin/Account/Update?accountId=@account.AccountId"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                                                         <a class="dropdown-item" onclick="deleteBtn(@account.AccountId)"><i class="bx bx-trash me-1"></i> Delete</a>
+                                                    <a class="dropdown-item" asp-page="Index" asp-page-handler="ActivateAccount" asp-route-email="@account.Email"><i class="bx bx-edit-alt me-1"></i>Active account</a>
                                                     </div>
                                                 </div>
                                             </td>

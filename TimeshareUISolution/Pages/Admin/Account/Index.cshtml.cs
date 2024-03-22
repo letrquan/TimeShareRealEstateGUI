@@ -1,5 +1,6 @@
 using APIDataAccess.DTO.ResponseModels;
 using APIDataAccess.DTO.ResponseModels.Helpers;
+using APIDataAccess.Helpers;
 using APIDataAccess.Services.IService;
 using APIDataAccess.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -105,6 +106,31 @@ namespace TimeshareUISolution.Pages.Admin.Account
                 TempData["errorMessage"] = "Server error";
                 return Page();
             }
+        }
+
+        public IActionResult OnGetActivateAccount(string email)
+        {
+            var userStr = HttpContext.Session.GetString("User");
+            if (userStr == null || userStr.Count() == 0)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            var user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
+            if (user == null)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            if (user.Value.Role != ((int)AccountRole.ADMIN))
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            var result = HelperFeature.Instance.CallApiAsyncPut("https://localhost:7246/api/Account/ActiveAccount/" + email, user.AccessToken, "").Result;
+
+            if (JsonConvert.DeserializeObject<bool>(result) == false)
+            {
+                TempData["errorMessage"] = "Server error";
+            }
+            return Page();
         }
     }
 }
