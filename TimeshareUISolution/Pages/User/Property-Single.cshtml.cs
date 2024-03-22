@@ -20,7 +20,7 @@ namespace TimeshareUISolution.Pages.User
         {
             _service = service;
             _serviceAvableTime = avableTimeService;
-            _reservationService =reservationService;
+            _reservationService = reservationService;
         }
         public DepartmentViewModel Property { get; set; }
         public List<AvailableTimeViewModel> AvailableTimeList { get; set; }

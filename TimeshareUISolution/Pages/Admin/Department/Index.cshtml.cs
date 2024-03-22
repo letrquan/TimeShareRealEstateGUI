@@ -14,10 +14,12 @@ namespace TimeshareUISolution.Pages.Admin.Department
         private readonly IDepartmentService _service;
         public static int CurrentPage { get; set; }
         public static int TotalPage { get; set; }
+        public int PageSize { get; set; } = 3;
         public IndexModel(IDepartmentService service)
         {
             _service = service;
         }
+        public int PageNumber { get; set; }
         public List<DepartmentViewModel> DepartmentList { get; set; }
         public IActionResult OnGet(string? number = null, string? filter = null)
         {
@@ -42,7 +44,7 @@ namespace TimeshareUISolution.Pages.Admin.Department
                 return RedirectToPage("/Admin/Login");
             }
             var response = _service.GetModelAsync<DynamicModelsResponse<DepartmentViewModel>>
-                (path: "/GetListDepartment?DepartmentName=" + filter + "&" + "page="  + CurrentPage, token: user.AccessToken).Result;
+                (path: "/GetListDepartment?DepartmentName=" + filter + "&" + "page="  + CurrentPage + "&pageSize=" +PageSize, token: user.AccessToken).Result;
 
             TotalPage = (int)MathF.Ceiling((float)response.Item1.Metadata.Total / (float)response.Item1.Metadata.Size);
 
@@ -51,6 +53,7 @@ namespace TimeshareUISolution.Pages.Admin.Department
                 if(response.Item1 != null)
                 {
                     DepartmentList = response.Item1.Results;
+                    PageNumber = response.Item1.Metadata.Page;
                 }
                 else
                 {

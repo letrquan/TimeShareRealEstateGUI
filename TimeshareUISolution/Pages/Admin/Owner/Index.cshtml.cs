@@ -14,6 +14,7 @@ namespace TimeshareUISolution.Pages.Admin.Owner
         private readonly IOwnerService _service;
         public static int CurrentPage { get; set; }
         public static int TotalPage { get; set; }
+        public int PageSize { get; set; } = 3;
         public IndexModel(IOwnerService service)
         {
             _service = service;
@@ -40,7 +41,7 @@ namespace TimeshareUISolution.Pages.Admin.Owner
                 return RedirectToPage("/Admin/Login");
             }
             var response = _service.GetModelAsync<DynamicModelsResponse<OwnerViewModel>>
-                (path: "/GetListOwner?OwnerName=" + filter + "&page=" + CurrentPage, token: user.AccessToken).Result;
+                (path: "/GetListOwner?OwnerName=" + filter + "&page=" + CurrentPage + "&pageSize=" + PageSize, token: user.AccessToken).Result;
 
             TotalPage = (int)MathF.Ceiling((float)response.Item1.Metadata.Total / (float)response.Item1.Metadata.Size);
             if (response.Item1 != null)

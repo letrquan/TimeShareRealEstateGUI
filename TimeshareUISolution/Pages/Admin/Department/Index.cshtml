@@ -3,89 +3,59 @@
 @{
     Layout = "_Layout_Admin";
 }
+
+
 <script>
     (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
         ({ key: "AIzaSyCVdvVS9xV4dMe7jGE7YYxMK6w6-B0DCYc", v: "weekly" });</script>
+<div class="content-wrapper">
+    <!-- Content -->
 
-<h3 class="card-header">Departments</h3>
-@* <div class="property-grid">
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Home /</span> Departments</h4>
+        <h3 class="card-header">Departments</h3>
+        <div class="search-bar">
+            <div class="card location">
+                <span>Search in</span>
+                <select>
+                    <option>Cleveland</option>
+                </select>
+            </div>
+            <div class="card search-input">
+                <input type="text" placeholder="Enter an address, city or ZIP code">
+            </div>
+            <div class="filters">
+                <select>
+                    <option>For sale</option>
+                </select>
+                <select>
+                    <option>Type Apartment</option>
+                </select>
+                <div class="rooms">
+                    <span>Room</span>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3+</a>
+                </div>
+                <div class="price-range">
+                    <select>
+                        <option>Min Price: $500k</option>
+                    </select>
+                    <select>
+                        <option>Max Price: $700k</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="results">
+        <div class="best-options">
             @{
-                if(Model.DepartmentList != null && Model.DepartmentList.Any())
+                if (Model.DepartmentList != null && Model.DepartmentList.Any())
                 {
                     foreach (var department in Model.DepartmentList)
                     {
-                        <div class="property-card">
-                            <img src="~/img/property-1.jpg" alt="Property 1">
-                            <div class="property-detail">
-                                <h3>$@department.Price</h3>
-                                <p><strong>@department.DepartmentName</strong></p>
-                                <p>@department.Address</p>
-                                <p><span class="icon">🛏️ @department.Capacity bed</span> &nbsp;&nbsp; <span class="icon">🛁 2 bath</span> &nbsp;&nbsp; <span class="icon">📏 2,108 sqft</span></p>
-                            </div>
-                        </div>
-                    }
-                }
-            }
-            <div class="property-card">
-                <img src="~/img/property-1.jpg" alt="Property 1">
-                <div class="property-detail">
-                    <h3>$9,995</h3>
-                    <p><strong>Mediterrania Garden Residence 2</strong></p>
-                    <p>1208 Vandervort Avenue Apt. 397</p>
-                    <p><span class="icon">🛏️ 3 bed</span> &nbsp;&nbsp; <span class="icon">🛁 2 bath</span> &nbsp;&nbsp; <span class="icon">📏 2,108 sqft</span></p>
-                </div>
-            </div>
-            <div class="property-card">
-                <img src="~/img/property-1.jpg" alt="Property 1">
-                <div class="property-detail">
-                    <h3>$9,995</h3>
-                    <p><strong>Mediterrania Garden Residence 2</strong></p>
-                    <p>1208 Vandervort Avenue Apt. 397</p>
-                    <p><span class="icon">🛏️ 3 bed</span> &nbsp;&nbsp; <span class="icon">🛁 2 bath</span> &nbsp;&nbsp; <span class="icon">📏 2,108 sqft</span></p>
-                </div>
-            </div>
-        </div> *@
-<div class="search-bar">
-    <div class="card location">
-        <span>Search in</span>
-        <select>
-            <option>Cleveland</option>
-        </select>
-    </div>
-    <div class="card search-input">
-        <input type="text" placeholder="Enter an address, city or ZIP code">
-    </div>
-    <div class="filters">
-        <select>
-            <option>For sale</option>
-        </select>
-        <select>
-            <option>Type Apartment</option>
-        </select>
-        <div class="rooms">
-            <span>Room</span>
-            <a asp-route-number="@IndexModel.CurrentPage" class="active">@IndexModel.CurrentPage</a>
-            <a asp-route-number="@(IndexModel.CurrentPage + 1)">@(IndexModel.CurrentPage + 1)+</a>
-        </div>
-        <div class="price-range">
-            <select>
-                <option>Min Price: $500k</option>
-            </select>
-            <select>
-                <option>Max Price: $700k</option>
-            </select>
-        </div>
-    </div>
-</div>
-
-<div class="results">
-    <div class="best-options">
-        @{
-            if (Model.DepartmentList != null && Model.DepartmentList.Any())
-            {
-                foreach (var department in Model.DepartmentList)
-                {
-                    <a href="/Admin/Department/Edit?departmentId=@department.DepartmentId">
                         <div class="property-card">
                             <div class="property-image">
                                 <img src="~/img/about-2.jpg" alt="Property Image">
@@ -99,258 +69,298 @@
                                 </div>
                                 <div class="price">$@department.Price</div>
                             </div>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="~/Admin/Department/Edit?departmentId=@department.DepartmentId"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                    <button class="dropdown-item" href="/">Available Time</button>
+                                </div>
+                            </div>
                         </div>
-                    </a>
+                    }
                 }
             }
-        }
+        </div>
+        <div class="map">
+            <div id="map" style="width:100%;height:500px;"></div>
+        </div>
+
     </div>
-    <div class="map">
-        <div id="map" style="width:100%;height:500px;"></div>
+    <div class="centered-div">
+            <div class="pagination">
+                <a asp-route-number="@(IndexModel.CurrentPage - 1)">&laquo;</a>
+                <a asp-route-number="@IndexModel.CurrentPage" class="active">@IndexModel.CurrentPage</a>
+                <a asp-route-number="@(IndexModel.CurrentPage + 1)">&raquo;</a>
+            </div>
     </div>
-</div>
 
-<script>
-    let map;
 
-    async function initMap() {
-        const { Map } = await google.maps.importLibrary("maps");
+    <script>
+        let map;
 
-        map = new Map(document.getElementById("map"), {
-            center: { lat: -34.397, lng: 150.644 },
-            zoom: 8,
-        });
-    }
+        async function initMap() {
+            const { Map } = await google.maps.importLibrary("maps");
 
-    initMap();
-</script>
-<style>
-    /* Reset and general styles */
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        font-family: Roboto, sans-serif;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    /* Header styles */
-    header {
-        background-color: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        padding: 10px 0;
-    }
-
-    nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .logo {
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .nav-links a {
-        text-decoration: none;
-        color: #333;
-        margin-left: 20px;
-    }
-
-    .user-actions a {
-        text-decoration: none;
-        color: #333;
-        margin-left: 10px;
-    }
-
-    /* Search bar styles */
-    .search-bar {
-        background-color: #f2f2f2;
-        padding: 20px;
-        display: flex;
-        align-items: center;
-        margin-top: 20px;
-        border-radius: 20px;
-    }
-
-    .location {
-        display: flex;
-        align-items: center;
-        margin-right: 20px;
-    }
-
-        .location select {
-            margin-left: 10px;
-            padding: 5px;
+            map = new Map(document.getElementById("map"), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8,
+            });
         }
 
-    .search-input input {
-        padding: 10px;
-        width: 300px;
-        border: none;
-        border-radius: 4px;
-    }
-
-    .filters {
-        display: flex;
-        align-items: center;
-        margin-left: 20px;
-    }
-
-        .filters select {
-            margin-right: 10px;
-            padding: 5px;
+        initMap();
+    </script>
+    <style>
+        .pagination a {
+            margin: 0 4px;
         }
 
-    .rooms {
-        display: flex;
-        align-items: center;
-        margin-right: 10px;
-    }
+        .centered-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 13vh; /* Chiều cao 100% của viewport */
+        }
 
-        .rooms a {
+        .centered-div {
+            /* Định dạng của div nằm giữa */
+        }
+
+
+        .dropdown {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Reset and general styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Roboto, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
             text-decoration: none;
             color: #333;
-            padding: 5px 10px;
-            border-radius: 4px;
-            margin-left: 5px;
+            margin-left: 20px;
         }
 
-            .rooms a.active {
-                background-color: #333;
-                color: #fff;
-            }
-
-    .price-range {
-        display: flex;
-        align-items: center;
-        margin-right: 10px;
-    }
-
-        .price-range select {
-            margin-left: 5px;
+        .user-actions a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 10px;
         }
 
-    .floor-area input {
-        padding: 5px;
-        border: none;
-        border-radius: 4px;
-        margin-right: 10px;
-    }
-
-    /* Results styles */
-    .results {
-        display: flex;
-        margin-top: 20px;
-        background-color: #F3f4f5;
-        border-radius: 20px;
-        padding: 20px;
-    }
-
-    .best-options {
-        flex: 0 0 70%;
-        padding: 20px;
-    }
-
-    .property-card {
-        display: flex;
-        border-radius: 20px;
-        overflow: hidden;
-        margin-bottom: 20px;
-        background-color: whitesmoke; /* Change background color to light gray */
-        box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), /* Add dark shadow */
-        -8px -8px 16px rgba(255, 255, 255, 0.5); /* Add light shadow */
-        transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
-    }
-
-    .property-image {
-        position: relative;
-        flex: 0 0 120px; /* Set a fixed width for the image container */
-        padding: 15px;
-    }
-
-        .property-image img {
-            width: 300px; /* Set the width of the image */
-            height: 200px; /* Set the height of the image */
-            object-fit: cover; /* Maintain aspect ratio and fill the container */
+        /* Search bar styles */
+        .search-bar {
+            background-color: #f2f2f2;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
             border-radius: 20px;
         }
 
-    .property-details {
-        flex: 1;
-        padding: 16px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    /* Rest of the styles remain the same */
-
-    .status {
-        background-color: green;
-        color: #fff;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-        position: absolute;
-        top: 10px;
-        left: 10px;
-    }
-
-    .info {
-        display: flex;
-        margin-bottom: 12px;
-    }
-
-        .info span {
-            margin-right: 16px;
+        .location {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
         }
 
-    .price {
-        font-weight: bold;
-        font-size: 16px;
-    }
+            .location select {
+                margin-left: 10px;
+                padding: 5px;
+            }
 
-    .map {
-        flex: 0 0 30%;
-        position: relative;
-        border-radius: 20px;
-        overflow: hidden;
-    }
-
-        .map img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: inherit;
+        .search-input input {
+            padding: 10px;
+            width: 300px;
+            border: none;
+            border-radius: 4px;
         }
 
+        .filters {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
 
-    .property-card:hover {
-        transform: translateY(-10px) translateX(-10px); /* Adjust the vertical float amount as needed */
-        box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.2), /* Darker shadow on hover */
-        -8px -8px 20px rgba(255, 255, 255, 0.7); /* Lighter shadow on hover */
-    }
+            .filters select {
+                margin-right: 10px;
+                padding: 5px;
+            }
 
-    .property-card {
-        transition: transform 0.3s ease; /* Add transition for smooth animation */
-    }
+        .rooms {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
 
-    .icon {
-        background-color: #F2f4f7;
-        border-radius: 10px;
-        padding: 4px;
-        font-weight: bold;
-        font-size: 12px;
-    }
-</style>
+            .rooms a {
+                text-decoration: none;
+                color: #333;
+                padding: 5px 10px;
+                border-radius: 4px;
+                margin-left: 5px;
+            }
 
+                .rooms a.active {
+                    background-color: #333;
+                    color: #fff;
+                }
+
+        .price-range {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+            .price-range select {
+                margin-left: 5px;
+            }
+
+        .floor-area input {
+            padding: 5px;
+            border: none;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        /* Results styles */
+        .results {
+            display: flex;
+            margin-top: 20px;
+            background-color: #F3f4f5;
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .best-options {
+            flex: 0 0 70%;
+            padding: 20px;
+        }
+
+        .property-card {
+            display: flex;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background-color: whitesmoke; /* Change background color to light gray */
+            box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), /* Add dark shadow */
+            -8px -8px 16px rgba(255, 255, 255, 0.5); /* Add light shadow */
+            transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
+        }
+
+        .property-image {
+            position: relative;
+            flex: 0 0 120px; /* Set a fixed width for the image container */
+            padding: 15px;
+        }
+
+            .property-image img {
+                width: 300px; /* Set the width of the image */
+                height: 200px; /* Set the height of the image */
+                object-fit: cover; /* Maintain aspect ratio and fill the container */
+                border-radius: 20px;
+            }
+
+        .property-details {
+            flex: 1;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Rest of the styles remain the same */
+
+        .status {
+            background-color: green;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .info {
+            display: flex;
+            margin-bottom: 12px;
+        }
+
+            .info span {
+                margin-right: 16px;
+            }
+
+        .price {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .map {
+            flex: 0 0 30%;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+            .map img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: inherit;
+            }
+
+
+        .property-card:hover {
+            transform: translateY(-10px) translateX(-10px); /* Adjust the vertical float amount as needed */
+            box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.2), /* Darker shadow on hover */
+            -8px -8px 20px rgba(255, 255, 255, 0.7); /* Lighter shadow on hover */
+        }
+
+        .property-card {
+            transition: transform 0.3s ease; /* Add transition for smooth animation */
+        }
+
+        .icon {
+            background-color: #F2f4f7;
+            border-radius: 10px;
+            padding: 4px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+    </style>
+</div>
+</div>
