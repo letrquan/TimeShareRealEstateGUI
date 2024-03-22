@@ -27,9 +27,9 @@
         </select>
         <div class="rooms">
             <span>Room</span>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3+</a>
+            <a asp-route-number="@(IndexModel.CurrentPage == 1? 1 : IndexModel.CurrentPage - 1)">@(IndexModel.CurrentPage == 1 ? 1 : IndexModel.CurrentPage - 1)-</a>
+            <a asp-route-number="@IndexModel.CurrentPage" class="active">@IndexModel.CurrentPage</a>
+            <a asp-route-number="@(IndexModel.CurrentPage + 1)">@(IndexModel.CurrentPage + 1)+</a>
         </div>
         <div class="price-range">
             <select>

@@ -41,6 +41,8 @@ namespace TimeshareUISolution.Pages.Admin.Owner
             }
             var response = _service.GetModelAsync<DynamicModelsResponse<OwnerViewModel>>
                 (path: "/GetListOwner?OwnerName=" + filter + "&page=" + CurrentPage, token: user.AccessToken).Result;
+
+            TotalPage = (int)MathF.Ceiling((float)response.Item1.Metadata.Total / (float)response.Item1.Metadata.Size);
             if (response.Item1 != null)
             {
                 if (response.Item1 != null)
@@ -57,6 +59,11 @@ namespace TimeshareUISolution.Pages.Admin.Owner
 
             }
             return Page();
+        }
+
+        public IActionResult OnPostSearch()
+        {
+            return OnGet(filter: Request.Form["search"]);
         }
     }
 }

@@ -2,6 +2,7 @@ using APIDataAccess.DTO.ResponseModels;
 using APIDataAccess.DTO.ResponseModels.Helpers;
 using APIDataAccess.Services.IService;
 using APIDataAccess.Utils;
+using AutoMapper.Execution;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
@@ -12,13 +13,19 @@ namespace TimeshareUISolution.Pages.Admin.Facility
     public class IndexModel : PageModel
     {
         private readonly IFacilityService _service;
+        public static int CurrentPage { get; set; }
+        public static int TotalPage { get; set; }
         public IndexModel(IFacilityService service)
         {
             _service = service;
         }
         public List<FacilityViewModel> FacilityList { get; set; }
-        public IActionResult OnGet()
+        public IActionResult OnGet(string? number = null, string? filter = null)
         {
+            CurrentPage = int.Parse(number != null ? number : "1");
+
+            CurrentPage = (CurrentPage < 1) ? 1 : CurrentPage;
+            CurrentPage = (CurrentPage > TotalPage && TotalPage != 0 ? TotalPage : CurrentPage);
             var userStr = HttpContext.Session.GetString("User");
             if (userStr == null || userStr.Count() == 0)
             {
@@ -33,7 +40,10 @@ namespace TimeshareUISolution.Pages.Admin.Facility
             {
                 return RedirectToPage("/Admin/Login");
             }
-            var response = _service.GetModelAsync<DynamicModelsResponse<FacilityViewModel>>(path: "/GetListFacility", token: user.AccessToken).Result;
+            var response = _service.GetModelAsync<DynamicModelsResponse<FacilityViewModel>>
+                (path: "/GetListFacility?FacilityName=" + filter + "&page=" + CurrentPage, token: user.AccessToken).Result;
+
+            TotalPage = (int)MathF.Ceiling((float)response.Item1.Metadata.Total / (float)response.Item1.Metadata.Size);
             if (response.Item1 != null)
             {
                 if (response.Item1 != null)
@@ -50,6 +60,11 @@ namespace TimeshareUISolution.Pages.Admin.Facility
 
             }
             return Page();
+        }
+
+        public IActionResult OnPostSearch()
+        {
+            return OnGet(filter: Request.Form["search"]);
         }
     }
 }
