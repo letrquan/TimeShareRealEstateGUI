@@ -148,7 +148,8 @@ namespace TimeshareUISolution.Pages.Admin.Facility
                 if (response.result == true)
                 {
                     TempData["successMessage"] = response.Message;
-                    return Redirect($"/Admin/Facility/Edit?FacilityId={facilityId}");
+                    return RedirectToPage("Index");
+                    //return Redirect($"/Admin/Facility/Edit?FacilityId={facilityId}");
                 }
                 else
                 {

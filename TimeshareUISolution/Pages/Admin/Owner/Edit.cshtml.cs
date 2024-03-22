@@ -96,7 +96,9 @@ namespace TimeshareUISolution.Pages.Admin.Owner
                 if (response.result == true)
                 {
                     TempData["successMessage"] = response.Message;
-                    return Redirect($"/Admin/Owner/Edit?OwnerId={ownerId}");
+                    return RedirectToPage("Index");
+
+                    // return Redirect($"/Admin/Owner/Edit?OwnerId={ownerId}");
                 }
                 else
                 {

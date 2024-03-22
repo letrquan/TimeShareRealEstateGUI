@@ -134,7 +134,9 @@ namespace TimeshareUISolution.Pages.Admin.Department
                 if (response.result == true)
                 {
                     TempData["successMessage"] = response.Message;
-                    return Redirect($"/Admin/Department/Edit?departmentId={departmentId}");
+                    return RedirectToPage("Index");
+
+                    //return Redirect($"/Admin/Department/Edit?departmentId={departmentId}");
                 }
                 else
                 {
@@ -149,6 +151,7 @@ namespace TimeshareUISolution.Pages.Admin.Department
                 TempData["errorMessage"] = "Server error";
                 return Page();
             }
+
         }
 
     }
