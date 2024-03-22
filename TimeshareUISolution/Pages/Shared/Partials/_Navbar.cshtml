@@ -42,28 +42,16 @@
                 <li class="nav-item">
                     <a class="nav-link " asp-page="/User/Property">Property</a>
                 </li>
-
                 <li class="nav-item">
-                    <a class="nav-link " href="blog-grid.html">Blog</a>
+                    <a class="nav-link " href="/User/Contact">Contact</a>
                 </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item " href="property-single.html">Property Single</a>
-                        <a class="dropdown-item " href="blog-single.html">Blog Single</a>
-                        <a class="dropdown-item " href="/User/Agent-Grid">Agents Grid</a>
-                        <a class="dropdown-item " href="agent-single.html">Agent Single</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="contact.html">Contact</a>
-                </li>
-
                 @if (user != null)
                 {
                     <li class="nav-item">
-                        <a class="nav-link " asp-page="/Admin/Account/Update?accountId=@user.Value.AccountId">Profile</a>
+                        <a class="nav-link " href="/Admin/Account/Update?accountId=@user.Value.AccountId">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/User/Reservation?customerId=@user.Value.AccountId">Reservation</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " asp-page="/Admin/Logout">Logout</a>

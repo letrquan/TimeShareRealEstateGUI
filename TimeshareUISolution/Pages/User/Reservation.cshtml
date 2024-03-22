@@ -1,0 +1,183 @@
+﻿@page
+@using APIDataAccess.DTO.ResponseModels.Helpers
+@using APIDataAccess.Utils
+@using Newtonsoft.Json
+@model TimeshareUISolution.Pages.User.ReservationModel
+@{
+    Layout = "_Layout_User";
+}
+
+
+
+<section class="intro-single">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-8">
+                <div class="title-single-box">
+                    <h1 class="title-single">Your Reservation</h1>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="User/Index">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Reservation
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section><!-- End Intro Single-->
+
+
+@{
+    if (Model.Reservations.Any())
+    {
+        <section class="property-grid grid">
+            <div class="container">
+                <div class="row">
+                    @foreach (var reservation in Model.Reservations)
+                    {
+                        <a href="">
+                            <div class="property-card">
+                                <div class="property-image">
+                                    <img src="~/img/about-2.jpg" alt="Property Image">
+                                    <span class="status">@DisplayUtils.ReservationStatusToString(reservation.Status)</span>
+                               </div>
+                                <div class="property-details">
+                                    <h4>Date Book: @reservation.ReservationDate.Value.Date</h4>
+                                    <p>Fee: @reservation.ReservationFee</p>
+                                    <p>Avaible Time: </p>
+                                    <div class="price"></div>
+                                </div>
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+        </section>
+    }
+    else{
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-8">
+                    <div class="title-single-box">
+                        <h1 class="title-single">No Reservations</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-sm-12">
+            <nav class="pagination-a">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="User/Reservation?pageNumber={@Model.PageNumber--}" tabindex="-1">
+                            <span class="bi bi-chevron-left"></span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="~/User/Reservation?pageNumber=1">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="~/User/Reservation?pageNumber=2">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="~/User/Reservation?pageNumber=3">3</a>
+                    </li>
+                    <li class="page-item next">
+                        <a class="page-link" href="User/Reservation?pageNumber={@Model.PageNumber++}">
+                            <span class="bi bi-chevron-right"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+}
+
+
+
+<style>
+
+    .property-card {
+        display: flex;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        background-color: whitesmoke; /* Change background color to light gray */
+        box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1), /* Add dark shadow */
+        -8px -8px 16px rgba(255, 255, 255, 0.5); /* Add light shadow */
+        transition: box-shadow 0.3s ease; /* Add transition for smooth effect */
+    }
+    .property-image {
+        position: relative;
+        flex: 0 0 120px; /* Set a fixed width for the image container */
+        padding: 15px;
+    }
+
+        .property-image img {
+            width: 500px; /* Set the width of the image */
+            height: 200px; /* Set the height of the image */
+            object-fit: cover; /* Maintain aspect ratio and fill the container */
+            border-radius: 20px;
+        }
+
+    .property-details {
+        flex: 1;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Rest of the styles remain the same */
+
+    .status {
+        background-color: green;
+        color: #fff;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+
+    .info {
+        display: flex;
+        margin-bottom: 12px;
+    }
+
+        .info span {
+            margin-right: 16px;
+        }
+
+    .price {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .property-card:hover {
+        transform: translateY(-10px) translateX(-10px); /* Adjust the vertical float amount as needed */
+        box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.2), /* Darker shadow on hover */
+        -8px -8px 20px rgba(255, 255, 255, 0.7); /* Lighter shadow on hover */
+    }
+
+    .property-card {
+        transition: transform 0.3s ease; /* Add transition for smooth animation */
+    }
+
+    .icon {
+        background-color: #F2f4f7;
+        border-radius: 10px;
+        padding: 4px;
+        font-weight: bold;
+        font-size: 12px;
+    }
+</style>

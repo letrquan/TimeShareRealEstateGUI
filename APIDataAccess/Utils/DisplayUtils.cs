@@ -109,5 +109,35 @@ namespace APIDataAccess.Utils
                     return "DISABLED";
             }
         }
+        // reservation status to string
+        public static string ReservationStatusToString(int? status)
+        {
+            switch (status)
+            {
+                case 1:
+                    return "CONFIRMED";
+                case 2:
+                    return "PENDING";
+                case 3:
+                    return "CANCELLED";
+                case 4:
+                    return "COMPLETED";
+                case 5:
+                    return "WAITLISTED";
+                case 6:
+                    return "CHECKED_IN";
+                case 7:
+                    return "CHECKED_OUT";
+                case 8:
+                    return "IN_PROGRESS";
+                case 9:
+                    return "NO_SHOW";
+                case 10:
+                    return "ON_HOLD";
+                default:
+                    return "ACTIVE";
+
+            }
+        }
     }
 }
