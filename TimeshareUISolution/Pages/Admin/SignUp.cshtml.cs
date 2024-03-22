@@ -1,4 +1,4 @@
-using APIDataAccess.DTO.RequestModels;
+﻿using APIDataAccess.DTO.RequestModels;
 using APIDataAccess.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -8,9 +8,10 @@ namespace TimeshareUISolution.Pages.Admin
 {
     public class SignUpModel : PageModel
     {
-        public void OnGet()
+        public string Message { get; set; }
+        public void OnGet(string? message)
         {
-
+            Message = message;
         }
         public IActionResult OnPostRegister()
         {
@@ -26,9 +27,14 @@ namespace TimeshareUISolution.Pages.Admin
                 Password = Request.Form["password"],
             };
 
-            string data = JsonConvert.SerializeObject(request);
+           string data = JsonConvert.SerializeObject(request);
 
-            HelperFeature.Instance.CallApiAsyncPost("https://localhost:7246/api/Authenticate/SendVerificationCode/" + Request.Form["txt_email"], "", "");
+           var result = HelperFeature.Instance.CallApiAsyncPost("https://localhost:7246/api/Authenticate/SendVerificationCode/" + Request.Form["txt_email"], "", "").Result;
+
+            if (JsonConvert.DeserializeObject<bool>(result) == false)
+            {
+                return Page();
+            }
 
             return RedirectToPage("Verify", new {request = data});
         }
