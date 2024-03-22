@@ -1,5 +1,6 @@
 using APIDataAccess.DTO.ResponseModels;
 using APIDataAccess.DTO.ResponseModels.Helpers;
+using APIDataAccess.Helpers;
 using APIDataAccess.Services.IService;
 using APIDataAccess.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,8 @@ namespace TimeshareUISolution.Pages.Admin.Account
     public class IndexModel : PageModel
     {
         private readonly IAccountService _service;
-        public int CurrentPage { get; set; }
-        public int TotalPage { get; set; }
+        public static int CurrentPage { get; set; }
+        public static int TotalPage { get; set; }
         public int TotalRecord { get; set; }
         public int PageSize { get; set; }
         public string SearchString { get; set; }
@@ -23,8 +24,13 @@ namespace TimeshareUISolution.Pages.Admin.Account
         {
             _service = service;
         }
-        public IActionResult OnGet()
+        public IActionResult OnGet(string? number)
         {
+            CurrentPage = int.Parse(number != null ? number : "1"); 
+
+            CurrentPage = (CurrentPage < 1)? 1 : CurrentPage;
+            CurrentPage = (CurrentPage > TotalPage  && TotalPage != 0? TotalPage : CurrentPage);
+
             var userStr = HttpContext.Session.GetString("User");
             if (userStr == null || userStr.Count() == 0)
             {
@@ -39,12 +45,13 @@ namespace TimeshareUISolution.Pages.Admin.Account
             {
                 return RedirectToPage("/Admin/Login");
             }
-            var accountRespone = _service.GetModelAsync<DynamicModelsResponse<AccountViewModel>>(path: "/GetListAccount", token: user.AccessToken).Result;
+            var accountRespone = _service.GetModelAsync<DynamicModelsResponse<AccountViewModel>>(path: "/GetListAccount?page=" + CurrentPage, token: user.AccessToken).Result;
             if (accountRespone.Item1 != null)
             {
                 if(accountRespone.Item1.Results != null)
                 {
                     AccountList = accountRespone.Item1.Results;
+                    TotalPage = (int)MathF.Ceiling((float)accountRespone.Item1.Metadata.Total/(float) accountRespone.Item1.Metadata.Size);
                 }
                 else
                 {
@@ -99,7 +106,31 @@ namespace TimeshareUISolution.Pages.Admin.Account
                 TempData["errorMessage"] = "Server error";
                 return Page();
             }
+        }
 
+        public IActionResult OnGetActivateAccount(string email)
+        {
+            var userStr = HttpContext.Session.GetString("User");
+            if (userStr == null || userStr.Count() == 0)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            var user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
+            if (user == null)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            if (user.Value.Role != ((int)AccountRole.ADMIN))
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            var result = HelperFeature.Instance.CallApiAsyncPut("https://localhost:7246/api/Account/ActiveAccount/" + email, user.AccessToken, "").Result;
+
+            if (JsonConvert.DeserializeObject<bool>(result) == false)
+            {
+                TempData["errorMessage"] = "Server error";
+            }
+            return Page();
         }
     }
 }
