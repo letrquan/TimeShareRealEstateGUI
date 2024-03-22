@@ -13,5 +13,9 @@ namespace APIDataAccess.Utils
         Authenticate,
         Department,
         Project,
+        Owner,
+        Facility,
+        AvailableTime,
+        Reservation,
     }
 }

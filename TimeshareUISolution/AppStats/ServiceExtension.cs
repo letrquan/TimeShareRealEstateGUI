@@ -10,6 +10,10 @@ namespace TimeshareUISolution.AppStats
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAuthenticateService, AuthenticateService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IOwnerService, OwnerService>();
+            services.AddScoped<IFacilityService, FacilityService>();
+            services.AddScoped<IAvableTimeService, AvableTimeService>();
+            services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IProjectService, ProjectService>();
         }
     }

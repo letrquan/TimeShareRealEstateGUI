@@ -1,8 +1,12 @@
 ﻿@page
+@using APIDataAccess.DTO.ResponseModels.Helpers
+@using APIDataAccess.Utils
+@using Newtonsoft.Json
 @model TimeshareUISolution.Pages.User.Property_SingleModel
 @{
     Layout = "_Layout_User";
 }
+
 
 <!-- ======= Intro Single ======= -->
 <section class="intro-single">
@@ -10,8 +14,8 @@
         <div class="row">
             <div class="col-md-12 col-lg-8">
                 <div class="title-single-box">
-                    <h1 class="title-single">304 Blaster Up</h1>
-                    <span class="color-text-a">Chicago, IL 606543</span>
+                    <h1 class="title-single">@Model.Property.Address</h1>
+                    <span class="color-text-a">@Model.Property.DepartmentName</span>
                 </div>
             </div>
             <div class="col-md-12 col-lg-4">
@@ -24,7 +28,7 @@
                             <a href="/User/Property">Properties</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            304 Blaster Up
+                            @Model.Property.DepartmentName
                         </li>
                     </ol>
                 </nav>
@@ -62,7 +66,7 @@
                                     <span class="bi bi-cash">$</span>
                                 </div>
                                 <div class="card-title-c align-self-center">
-                                    <h5 class="title-c">15000</h5>
+                                    <h5 class="title-c">@Model.Property.Price</h5>
                                 </div>
                             </div>
                         </div>
@@ -77,39 +81,31 @@
                             <div class="summary-list">
                                 <ul class="list">
                                     <li class="d-flex justify-content-between">
-                                        <strong>Property ID:</strong>
-                                        <span>1134</span>
+                                        <strong>State:</strong>
+                                        <span>@Model.Property.State</span>
                                     </li>
                                     <li class="d-flex justify-content-between">
                                         <strong>Location:</strong>
-                                        <span>Chicago, IL 606543</span>
+                                        <span>@Model.Property.Address</span>
                                     </li>
                                     <li class="d-flex justify-content-between">
                                         <strong>Property Type:</strong>
-                                        <span>House</span>
+                                        <span>@DisplayUtils.ConstructionTypeToString(Model.Property.ConstructionType)</span>
                                     </li>
                                     <li class="d-flex justify-content-between">
                                         <strong>Status:</strong>
-                                        <span>Sale</span>
+                                        <span>@DisplayUtils.DepartmentStatusToString(Model.Property.Status)</span>
                                     </li>
                                     <li class="d-flex justify-content-between">
-                                        <strong>Area:</strong>
+                                        <strong>Capacity:</strong>
                                         <span>
-                                            340m
+                                            @Model.Property.Capacity
                                             <sup>2</sup>
                                         </span>
                                     </li>
                                     <li class="d-flex justify-content-between">
-                                        <strong>Beds:</strong>
-                                        <span>4</span>
-                                    </li>
-                                    <li class="d-flex justify-content-between">
-                                        <strong>Baths:</strong>
-                                        <span>2</span>
-                                    </li>
-                                    <li class="d-flex justify-content-between">
-                                        <strong>Garage:</strong>
-                                        <span>1</span>
+                                        <strong>Floors:</strong>
+                                        <span>@Model.Property.Floors</span>
                                     </li>
                                 </ul>
                             </div>
@@ -125,37 +121,47 @@
                         </div>
                         <div class="property-description">
                             <p class="description color-text-a">
-                                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit
-                                neque, auctor sit amet
-                                aliquam vel, ullamcorper sit amet ligula. Cras ultricies ligula sed magna dictum porta.
-                                Curabitur aliquet quam id dui posuere blandit. Mauris blandit aliquet elit, eget tincidunt
-                                nibh pulvinar quam id dui posuere blandit.
-                            </p>
-                            <p class="description color-text-a no-margin">
-                                Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Donec rutrum congue leo eget
-                                malesuada. Quisque velit nisi,
-                                pretium ut lacinia in, elementum id enim. Donec sollicitudin molestie malesuada.
+                                @Model.Property.Description
                             </p>
                         </div>
                         <div class="row section-t3">
                             <div class="col-sm-12">
                                 <div class="title-box-d">
-                                    <h3 class="title-d">Amenities</h3>
+                                    <h3 class="title-d">Avable Time</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="amenities-list color-text-a">
-                            <ul class="list-a no-margin">
-                                <li>Balcony</li>
-                                <li>Outdoor Kitchen</li>
-                                <li>Cable Tv</li>
-                                <li>Deck</li>
-                                <li>Tennis Courts</li>
-                                <li>Internet</li>
-                                <li>Parking</li>
-                                <li>Sun Room</li>
-                                <li>Concrete Flooring</li>
-                            </ul>
+                            <form method="post">
+                                <input type="hidden" name="departmentId" value="@Model.Property.DepartmentId"/>
+                                <div class="form-floating mb-3">
+                                    <select id="avableTimeId" name="avableTimeId" class="select2 form-select">
+                                        @{
+                                            foreach (var item in Model.AvailableTimeList)
+                                            {
+                                                if (item.Status == 1)
+                                                {
+                                                    <option value="@item.AvailableTimeId">Start Date: @item.StartDate.Value.Date - End Date: @item.EndDate.Value.Date</option>
+                                                }
+
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                                @{
+                                    var fee = Model.Property.Price * (decimal)0.1;
+                                }
+                                <div class="form-floating mb-3">
+                                    <p class="color-text-a">
+                                        Reservation Fee
+                                    </p>
+                                    <input type="text" value="@fee.Value.ToString("0.##")" disabled style="width:100px;"/> <span>VND</span>
+                                    <input type="hidden" name="reservationFee" value="@fee"/>
+                                </div>
+                                <button type="submit" class="btn btn-a">Book Now</button>
+                            </form>
+
+
                         </div>
                     </div>
                 </div>

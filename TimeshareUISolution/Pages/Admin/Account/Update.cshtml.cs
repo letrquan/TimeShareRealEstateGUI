@@ -29,10 +29,10 @@ namespace TimeshareUISolution.Pages.Admin.Account
             {
                 return RedirectToPage("/Admin/Login");
             }
-            if (user.Value.Role != ((int)AccountRole.ADMIN))
-            {
-                return RedirectToPage("/Admin/Login");
-            }
+            //if (user.Value.Role != ((int)AccountRole.ADMIN))
+            //{
+            //    return RedirectToPage("/Admin/Login");
+            //}
             var response = _service.GetModelAsync<ResponseResult<AccountViewModel>>(path: $"/GetAccountById/{accountID}", token: user.AccessToken).Result;
             if (response.Item1 != null)
             {
@@ -71,10 +71,10 @@ namespace TimeshareUISolution.Pages.Admin.Account
             {
                 return RedirectToPage("/Admin/Login");
             }
-            if (user.Value.Role != ((int)AccountRole.ADMIN))
-            {
-                return RedirectToPage("/Admin/Login");
-            }
+            //if (user.Value.Role != ((int)AccountRole.ADMIN))
+            //{
+            //    return RedirectToPage("/Admin/Login");
+            //}
             var update = new AccountRequestModel
             {
                 FirstName = firstName,

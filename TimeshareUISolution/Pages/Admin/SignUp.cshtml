@@ -3,6 +3,19 @@
 @{
     Layout = "_Layout_NoHeader";
 }
+<script>
+    function checkPasswordMatch() {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirm-password").value;
+
+        if (password != confirmPassword) {
+            document.getElementById("confirm-password-error").innerHTML = "Mật khẩu không trùng khớp!";
+        } else {
+            document.getElementById("confirm-password-error").innerHTML = "";
+        }
+    }
+</script>
+
 <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
     <div class="outer-card bg-light d-flex">
         <!-- Sign Up Card -->
@@ -20,29 +33,42 @@
                         </div>
                     </a>
                     <h5 class="card-title">Sign Up</h5>
-                    <form>
+                    <form method="post" asp-page-handler="Register">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="name" placeholder="Name">
+                                    <input type="text" class="form-control" name="txt_name" id="name" placeholder="Name">
                                     <label for="name">Name</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                                    <input type="email" class="form-control" name="txt_email" id="email" placeholder="name@example.com">
                                     <label for="email">Email</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                             <label for="password">Password</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="confirm-password" placeholder="Confirm Password">
                             <label for="password">Confirm Password</label>
                         </div>
+
+                        <div class="form-floating mb-3">
+                            <select id="role" name="role" class="select2 form-select">
+                                            <option selected value="2">
+                                                Staff
+                                            </option>
+                                            <option selected value="3">
+                                                Customer
+                                            </option>
+                            </select>
+                            <label for="city">Role</label>
+                        </div>
+
                         <div class="mb-3 form-check d-flex">
                             <input type="checkbox" class="form-check-input" id="termsAgreement">
                             <label class="form-check-label mb-0" for="termsAgreement">

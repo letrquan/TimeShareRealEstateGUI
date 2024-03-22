@@ -1,26 +1,25 @@
 ﻿@page
-@model TimeshareUISolution.Pages.Admin.Department.IndexModel
+@using APIDataAccess.Utils
+@model TimeshareUISolution.Pages.Admin.Facility.IndexModel
 @{
     Layout = "_Layout_Admin";
 }
-<script>
-    (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })
-        ({ key: "AIzaSyCVdvVS9xV4dMe7jGE7YYxMK6w6-B0DCYc", v: "weekly" });</script>
 
-<h3 class="card-header">Departments</h3>
+
+<h3 class="card-header">Facilitys</h3>
 @* <div class="property-grid">
             @{
-                if(Model.DepartmentList != null && Model.DepartmentList.Any())
+                if(Model.FacilityList != null && Model.FacilityList.Any())
                 {
-                    foreach (var department in Model.DepartmentList)
+                    foreach (var facility in Model.FacilityList)
                     {
                         <div class="property-card">
                             <img src="~/img/property-1.jpg" alt="Property 1">
                             <div class="property-detail">
-                                <h3>$@department.Price</h3>
-                                <p><strong>@department.DepartmentName</strong></p>
-                                <p>@department.Address</p>
-                                <p><span class="icon">🛏️ @department.Capacity bed</span> &nbsp;&nbsp; <span class="icon">🛁 2 bath</span> &nbsp;&nbsp; <span class="icon">📏 2,108 sqft</span></p>
+                                <h3>$@facility.Price</h3>
+                                <p><strong>@facility.FacilityName</strong></p>
+                                <p>@facility.Address</p>
+                                <p><span class="icon">🛏️ @facility.Capacity bed</span> &nbsp;&nbsp; <span class="icon">🛁 2 bath</span> &nbsp;&nbsp; <span class="icon">📏 2,108 sqft</span></p>
                             </div>
                         </div>
                     }
@@ -82,23 +81,23 @@
 <div class="results">
     <div class="best-options">
         @{
-            if (Model.DepartmentList != null && Model.DepartmentList.Any())
+            if (Model.FacilityList != null && Model.FacilityList.Any())
             {
-                foreach (var department in Model.DepartmentList)
+                foreach (var facility in Model.FacilityList)
                 {
-                    <a href="/Admin/Department/Edit?departmentId=@department.DepartmentId">
+                    <a href="/Admin/Facility/Edit?facilityId=@facility.FacilityId">
                         <div class="property-card">
                             <div class="property-image">
-                                <img src="~/img/about-2.jpg" alt="Property Image">
+                                <img src="@facility.Image" alt="Property Image">
                                 <span class="status">New</span>
                             </div>
                             <div class="property-details">
-                                <h4>@department.DepartmentName</h4>
-                                <p>@department.Address</p>
+                                <h4>@facility.FacilityName</h4>
+                                <p>@facility.Description</p>
                                 <div class="info">
-                                    <p><span class="icon">🛏️ @department.Capacity bed</span> &nbsp;&nbsp; <span class="icon">🛁 2 bath</span> &nbsp;&nbsp; <span class="icon">📏 2,108 sqft</span></p>
+                                    <p><span class="icon">Category: @Enum.GetValues(typeof(FacilityType)).GetValue(Convert.ToInt64(facility.FacilityType))  </span> &nbsp;&nbsp; 
+                                    <span class="icon">Department: @facility.DepartmentId</span> &nbsp;&nbsp; 
                                 </div>
-                                <div class="price">$@department.Price</div>
                             </div>
                         </div>
                     </a>

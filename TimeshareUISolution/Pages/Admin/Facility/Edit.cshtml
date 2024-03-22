@@ -1,6 +1,6 @@
-﻿@page
+﻿@* @page
 @using APIDataAccess.Utils
-@model TimeshareUISolution.Pages.Admin.Department.EditModel
+@model TimeshareUISolution.Pages.Admin.Facility.EditModel
 @{
     Layout = "_Layout_Admin";
 }
@@ -10,9 +10,9 @@
         <!-- Sign Up Card -->
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Edit Department</h5>
+                <h5 class="card-title">Edit Facility</h5>
                 <form method="post">
-                    <input type="hidden" name="departmentId" value="@Model.Department.DepartmentId" />
+                    <input type="hidden" name="FacilityId" value="@Model.Facility.FacilityId" />
                     <input type="hidden" name="ownerId" value="@Model.Owner.OwnerId" />
                     <div class="row">
                         <div class="col-md-6">
@@ -23,35 +23,35 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="departmentName" placeholder="Department Name" value="@Model.Department.DepartmentName">
-                                <label for="email">Department Name</label>
+                                <input type="text" class="form-control" name="FacilityName" placeholder="Facility Name" value="@Model.Facility.FacilityName">
+                                <label for="email">Facility Name</label>
                             </div>
                         </div>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="address" placeholder="Address" value="@Model.Department.Address">
+                        <input type="text" class="form-control" name="address" placeholder="Address" value="@Model.Facility.Address">
                         <label for="address">Address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="city" placeholder="City" value="@Model.Department.City">
+                        <input type="text" class="form-control" name="city" placeholder="City" value="@Model.Facility.City">
                         <label for="city">City</label>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="state" placeholder="State" value="@Model.Department.State">
+                                <input type="text" class="form-control" name="state" placeholder="State" value="@Model.Facility.State">
                                 <label for="state">State</label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" name="country" placeholder="Country" value="@Model.Department.Country">
+                                <input type="text" class="form-control" name="country" placeholder="Country" value="@Model.Facility.Country">
                                 <label for="country">Country</label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" name="capacity" placeholder="Capacity" value="@Model.Department.Capacity">
+                                <input type="number" class="form-control" name="capacity" placeholder="Capacity" value="@Model.Facility.Capacity">
                                 <label for="capacity">Capacity</label>
                             </div>
                         </div>
@@ -59,13 +59,13 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" name="floor" placeholder="Floors" value="@Model.Department.Floors">
+                                <input type="number" class="form-control" name="floor" placeholder="Floors" value="@Model.Facility.Floors">
                                 <label for="floor">Floors</label>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" name="price" placeholder="Price" value="@Model.Department.Price">
+                                <input type="number" class="form-control" name="price" placeholder="Price" value="@Model.Facility.Price">
                                 <label for="price">Price</label>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                                     @{
                                         foreach (var item in Model.Enum)
                                         {
-                                            if (item.Key == Model.Department.ConstructionType)
+                                            if (item.Key == Model.Facility.ConstructionType)
                                             {
                                                 <option selected value="@item.Key">
                                                     @item.Value
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="description" placeholder="Description" value="@Model.Department.Description">
+                        <input type="text" class="form-control" name="description" placeholder="Description" value="@Model.Facility.Description">
                         <label for="city">Description</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -104,7 +104,7 @@
                             @{
                                 foreach (var item in Model.Status)
                                 {
-                                    if (item.Key == Model.Department.Status)
+                                    if (item.Key == Model.Facility.Status)
                                     {
                                         <option selected value="@item.Key">
                                             @item.Value
@@ -277,4 +277,4 @@
             allowOutsideClick: false
         })
     </script>
-}
+} *@
