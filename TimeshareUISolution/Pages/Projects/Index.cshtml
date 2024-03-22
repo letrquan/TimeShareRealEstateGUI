@@ -1,0 +1,126 @@
+﻿@page
+@model TimeshareUISolution.Pages.Project.IndexModel
+@{
+    Layout = "_Layout_Admin";
+}
+<div class="dashboard">
+    <div class="header">
+        <h1>Projects</h1>
+        <div class="tabs">
+            <a href="#" class="active">All</a>
+            <a href="#">Current</a>
+            <a href="#">On Hold</a>
+            <a href="#">Closed</a>
+        </div>
+       
+    </div>
+
+    <div class="project-list">
+             
+        @{
+            if (Model.projectViewModels != null && Model.projectViewModels.Any())
+            {
+                foreach(var project in Model.projectViewModels)
+                {
+                    <div class="project-card">
+                        <div class="project-icon">
+                            <img src="~/img/post-1.jpg" alt="Project Icon">
+                        </div>
+                        <h2>@project.ProjectName</h2>
+                        
+                        <h3>@project.ProjectCode</h3>
+
+                        <p>Start Date: @project.StartDate</p>
+                        <p>End Date: @project.EndDate</p>
+                        <span class="status">New</span>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+
+<style>
+    .dashboard {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .tabs a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #f2f2f2;
+        color: #333;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-right: 10px;
+    }
+
+        .tabs a.active {
+            background-color: #333;
+            color: #fff;
+        }
+
+    
+
+    .project-list {
+        display: flex;
+        border-radius: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .project-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        align-items: center;
+        
+    }
+
+    .project-icon img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%; /* Or any desired radius */
+        border: 2px solid #ccc; /* Adjust color as needed */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+   
+    .status {
+        display: inline-block;
+        padding: 4px 8px;
+        background-color: #28a745;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 12px;
+    }
+
+  
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-gap: 20px;
+    }
+
+    .project-card h2 {
+        font-size: 1.7rem; /* Adjust as needed */
+        line-clamp: 2; /* Adjust the number of lines to show */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+</style>

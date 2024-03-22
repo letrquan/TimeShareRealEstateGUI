@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Admin\Project\" />
     <Folder Include="Pages\Admin\Owner\" />
+    <Folder Include="Pages\Admin\Project\" />
   </ItemGroup>
 
 </Project>
