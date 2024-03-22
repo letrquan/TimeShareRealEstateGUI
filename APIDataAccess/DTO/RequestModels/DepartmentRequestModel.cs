@@ -24,12 +24,18 @@ namespace APIDataAccess.DTO.RequestModels
         public string? Country { get; set; }
         [RegularExpression(@"^(?=.*[0-9])\d+$", ErrorMessage = "Floors is Invalid!")]
         public int? Floors { get; set; }
-        [RegularExpression(@"^(?=.*[0-9])\d+$", ErrorMessage = "Price is Invalid!")]
         public decimal? Price { get; set; }
         public int? ConstructionType { get; set; }
         public string? Description { get; set; }
         public int? Status { get; set; }
         [RegularExpression(@"^(?=.*[0-9])\d+$", ErrorMessage = "Capacity is Invalid!")]
         public int? Capacity { get; set; }
+        public ICollection<DepartmentOfProjectDepartmentRequestModel>? DepartmentOfProjects { get; set; }
+
+        public ICollection<AvailableTimeViewModel>? AvailableTimes { get; set; }
+        public ICollection<CustomerRequestViewModel>? CustomerRequests { get; set; }
+        public ICollection<FacilityViewModel>? Facilities { get; set; }
+        public ICollection<FeedbackViewModel>? Feedbacks { get; set; }
+        public ICollection<UsageHistoryViewModel>? UsageHistories { get; set; }
     }
 }
