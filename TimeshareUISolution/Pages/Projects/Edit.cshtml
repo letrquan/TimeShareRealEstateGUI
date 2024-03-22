@@ -1,0 +1,120 @@
+﻿@page
+@model TimeshareUISolution.Pages.Projects.EditModel
+@{
+    Layout = "_Layout_Admin";
+}
+<!-- Basic Layout -->
+<div class="row">
+    <div class="col-xl">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Project Edit</h5>
+               
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <input type="hidden" name="projectId" value="@Model.Project.ProjectId" />
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-default-fullname">Project Name</label>
+                        <input type="text" class="form-control" id="basic-default-fullname" placeholder="Project Name" value="@Model.Project.ProjectName"/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-default-prioritytype">Priority Type</label>
+                        <select 
+                            id="basic-default-prioritytype"
+                                name="basic-default-prioritytype"
+                                class="form-select">
+                            @{
+                                foreach (var item in Model.Enum)
+                                {
+                                    if(item.Key == Model.Project.PriorityType)
+                                    {
+                                           <option value="@item.Key" selected>@item.Value</option>
+                                       }
+                                       else
+                                       {
+                                           <option value="@item.Key">@item.Value</option>
+                                    }
+                                }
+                                }
+</select>
+
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-default-projectcode">Project Code</label>
+                        <input type="text" class="form-control" id="basic-default-projectcode" placeholder="Project Code" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="basic-default-totalSlot">Total slot</label>
+                        <input type="text" class="form-control" id="basic-default-totalSlot" placeholder="Total Slot" />
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-startday-local-input" class="col-md-2 col-form-label">Start Day</label>
+                        <div class="col-md-10">
+                            <input class="form-control"
+                                   type="datetime-local"
+                                   value="2021-06-18T12:30:00"
+                                   id="html5-startday-local-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-endday-local-input" class="col-md-2 col-form-label">End Day</label>
+                        <div class="col-md-10">
+                            <input class="form-control"
+                                   type="datetime-local"
+                                   value="2021-06-18T12:30:00"
+                                   id="html5-endday-local-input" />
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select id="status" name="status" class="select2 form-select">
+                            @{
+                                foreach (var item in Model.Status)
+                                {
+                                    if (item.Key == Model.Project.Status)
+                                    {
+                                        <option selected value="@item.Key">
+                                            @item.Value
+                                        </option>
+                                    }
+
+                                    {
+                                        <option value="@item.Key">
+                                            @item.Value
+                                        </option>
+                                    }
+
+                                }
+                            }
+                        </select>
+                        <label for="city">Status</label>
+                    </div>
+                    
+                    <div class="mb-3 row">
+                        <label for="html5-registrationOpeningDate-local-input" class="col-md-2 col-form-label">Registration Opening Date</label>
+                        <div class="col-md-10">
+                            <input class="form-control"
+                                   type="datetime-local"
+                                   value="2021-06-18T12:30:00"
+                                   id="html5-registrationOpeningDate-local-input" />
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="html5-registrationEndDate-local-input" class="col-md-2 col-form-label">Registration End Date</label>
+                        <div class="col-md-10">
+                            <input class="form-control"
+                                   type="datetime-local"
+                                   value="2021-06-18T12:30:00"
+                                   id="html5-registrationEndDate-local-input" />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+         
