@@ -35,7 +35,7 @@ namespace TimeshareUISolution.Pages.User
             }
             if (user.Value.Role != ((int)AccountRole.CUSTOMER))
             {
-                return RedirectToPage("/Admin/Login");
+                return RedirectToPage("/");
             }
             if (pageNumber <= 0 || pageNumber == null)
             {

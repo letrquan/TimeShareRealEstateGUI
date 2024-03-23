@@ -24,6 +24,7 @@ namespace APIDataAccess.DTO.RequestModels
         public string? Country { get; set; }
         [RegularExpression(@"^(?=.*[0-9])\d+$", ErrorMessage = "Floors is Invalid!")]
         public int? Floors { get; set; }
+        [RegularExpression(@"^\d+(\.\d+)?$", ErrorMessage = "Price is Invalid!")]
         public decimal? Price { get; set; }
         public int? ConstructionType { get; set; }
         public string? Description { get; set; }

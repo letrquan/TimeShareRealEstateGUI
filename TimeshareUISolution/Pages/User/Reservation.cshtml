@@ -49,7 +49,7 @@
                                     <span class="status">@DisplayUtils.ReservationStatusToString(reservation.Status)</span>
                                </div>
                                 <div class="property-details">
-                                    <h4>Date Book: @reservation.ReservationDate.Value.Date</h4>
+                                    <h4>Date Book: @reservation.ReservationDate.Value.Date.ToString("dd-MM-yyyy")</h4>
                                     <p>Fee: @reservation.ReservationFee</p>
                                     <p>Avaible Time: </p>
                                     <div class="price"></div>

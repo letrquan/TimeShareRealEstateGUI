@@ -1,3 +1,4 @@
+using APIDataAccess.DTO.RequestModels;
 using APIDataAccess.DTO.ResponseModels;
 using APIDataAccess.DTO.ResponseModels.Helpers;
 using APIDataAccess.Services.IService;
@@ -17,6 +18,10 @@ namespace TimeshareUISolution.Pages.Admin.AvaibleTime
         {
             _avableTimeService = avableTimeService;
         }
+        [BindProperty]
+        public DateTime StartDate { get; set; }
+        [BindProperty]
+        public DateTime EndDate { get; set; }
         public static int CurrentPage { get; set; }
         public static int TotalPage { get; set; }
         public int PageSize { get; set; } = 6;
@@ -66,6 +71,91 @@ namespace TimeshareUISolution.Pages.Admin.AvaibleTime
                     RedirectToPage("/Admin/Department/Index");
                 }
             }
+        }
+        public IActionResult OnPostDelete(int atId, int departmentId)
+        {
+            var userStr = HttpContext.Session.GetString("User");
+            if (userStr == null || userStr.Count() == 0)
+            {
+                RedirectToPage("/Admin/Login");
+            }
+            var user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
+            if (user == null)
+            {
+                RedirectToPage("/Admin/Login");
+            }
+            if (user.Value.Role != ((int)AccountRole.ADMIN) && user.Value.Role != ((int)AccountRole.STAFF))
+            {
+                RedirectToPage("/Admin/Login");
+            }
+            var response = _avableTimeService.Delete<ResponseResult<AvailableTimeViewModel>>(path: $"/DeleteAvailableTime/{atId}", token: user.AccessToken).Result;
+            if (response != null)
+            {
+                if(response.result == true)
+                {
+                    TempData["SuccessMessage"] = response.Message;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = response.Message;
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Server error";
+                
+            }
+            OnGet(departmentId);
+            return Page();
+        }
+        public IActionResult OnPostCreate(int departmentId)
+        {
+            var userStr = HttpContext.Session.GetString("User");
+            if (userStr == null || userStr.Count() == 0)
+            {
+                RedirectToPage("/Admin/Login");
+            }
+            var user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
+            if (user == null)
+            {
+                RedirectToPage("/Admin/Login");
+            }
+            if (user.Value.Role != ((int)AccountRole.ADMIN) && user.Value.Role != ((int)AccountRole.STAFF))
+            {
+                RedirectToPage("/Admin/Login");
+            }
+            var creatAvaibleTime = new AvailableTimeRequestModel
+            {
+                StartDate = StartDate,
+                EndDate = EndDate,
+                Status = (int?)AvailableStatus.AVAILABLE,
+                DepartmentProjectCode = null
+            };
+            var create = _avableTimeService.PostWithResponse<ResponseResult<AvailableTimeViewModel>, AvailableTimeRequestModel>(creatAvaibleTime , path: $"/CreateAvailableTime", token: user.AccessToken).Result;
+            if (create.Item1 != null)
+            {
+                if (create.Item1.result == true)
+                {
+                    TempData["SuccessMessage"] = create.Item1.Message;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = create.Item1.Message;
+                }
+            }
+            else
+            {
+                if(create.Item2 != null)
+                {
+                    TempData["ErrorMessage"] = create.Item2.Title;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Server error";
+                }
+            }
+            OnGet(departmentId);
+            return Page();
         }
     }
 }

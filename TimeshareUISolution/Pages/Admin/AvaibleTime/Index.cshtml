@@ -1,4 +1,5 @@
 ﻿@page
+@using APIDataAccess.Utils
 @model TimeshareUISolution.Pages.Admin.AvaibleTime.IndexModel
 @{
     Layout = "_Layout_Admin";
@@ -19,26 +20,87 @@
                 <li class="breadcrumb-item active">Avaible Time</li>
             </ol>
         </nav>
-        @{
-
-            if (Model.AvaiableList != null && Model.AvaiableList.Count > 0)
-            {
-                foreach (var at in Model.AvaiableList)
-                {
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <div class="card-subtitle text-muted mb-3">Card subtitle</div>
-                            <p class="card-text">
-                                Some quick example text to build on the card title and make up the bulk of the card's content.
-                            </p>
-                            <a href="javascript:void(0)" class="card-link">Card link</a>
-                            <a href="javascript:void(0)" class="card-link">Another link</a>
-                        </div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Create Avaiable Time
+        </button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Create Avaiable Time</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form method="post" asp-page-handler="Create">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-fullname">Start Date</label>
+                                <input type="datetime-local" id="dateTimeInput" name="StartDate"/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-fullname">End Date</label>
+                                <input type="datetime-local" id="dateTimeInput" name="EndDate"/>
+                            </div>
+                            <input type="hidden" name="departmentId" value="@Model.AvaiableList[0].DepartmentId" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding:20px;">
+            @{
+
+                if (Model.AvaiableList != null && Model.AvaiableList.Count > 0)
+                {
+                    foreach (var at in Model.AvaiableList)
+                    {
+                        <div class="col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">@DisplayUtils.AvailableTimeStatusToString(at.Status)</h5>
+                                    <p class="card-text">Start Date: @at.StartDate.Value.Date</p>
+                                    <p class="card-text">End Date: @at.EndDate.Value.Date</p>
+                                    <a href="#" class="btn btn-primary" data-mdb-ripple-init>Edit</a>
+                                    <a class="btn btn-danger" data-mdb-ripple-init onclick="deleteBtn(@at.AvailableTimeId, @at.DepartmentId)">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 }
-                
             }
-        }
+
+        </div>
+        <form method="post" asp-page-handler="Delete" id="deleteForm">
+            <input type="hidden" name="atId" id="atId" />
+            <input type="hidden" name="departmentId" id="dId" />
+        </form>
+        <script>
+            const deleteForm = document.getElementById('deleteForm');
+            var deleteInput = document.getElementById('atId');
+            var departmentInput = document.getElementById('dId');
+            // Click handler
+            function deleteBtn(atId, dId) {
+                Swal.fire({
+                    title: 'Bạn chắc chắn không?',
+                    text: "",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Có'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        deleteInput.value = atId;
+                        departmentInput.value = dId;
+                        // Submit form if user confirmed
+                        deleteForm.submit();
+                    }
+                })
+            }
+        </script>
     </div>
 </div>

@@ -139,5 +139,26 @@ namespace APIDataAccess.Utils
 
             }
         }
+        //available time status to string
+        public static string AvailableTimeStatusToString(int? status)
+        {
+            switch (status)
+            {
+                case 1:
+                    return "AVAILABLE";
+                case 2:
+                    return "BUSY";
+                case 3:
+                    return "FREE";
+                case 4:
+                    return "BOOKED";
+                case 5:
+                    return "RESERVED";
+                case 6:
+                    return "PENDING_APPROVAL";
+                default:
+                    return "UNAVAILABLE";
+            }
+        }
     }
 }

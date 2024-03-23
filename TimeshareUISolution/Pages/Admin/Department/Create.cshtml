@@ -22,36 +22,126 @@
 
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Basic Layout</h5>
-                <small class="text-muted float-end">Default label</small>
+                <h5 class="mb-0">Create Department</h5>
+                <small class="text-muted float-end"></small>
             </div>
             <div class="card-body">
-                <form>
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-default-fullname">Full Name</label>
-                        <input type="text" class="form-control" id="basic-default-fullname" placeholder="John Doe">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-default-company">Company</label>
-                        <input type="text" class="form-control" id="basic-default-company" placeholder="ACME Inc.">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-default-email">Email</label>
-                        <div class="input-group input-group-merge">
-                            <input type="text" id="basic-default-email" class="form-control" placeholder="john.doe" aria-label="john.doe" aria-describedby="basic-default-email2">
-                            <span class="input-group-text" id="basic-default-email2">@@example.com</span>
+                <form method="post">
+                    <div class="row"> 
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-fullname">Department Name</label>
+                                <input type="text" class="form-control" name="name" id="basic-default-fullname" placeholder="Department Name">
+                            </div>
                         </div>
-                        <div class="form-text">You can use letters, numbers &amp; periods</div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="basic-default-phone">Owner</label>
+                            <select id="ownerId" name="ownerId" class="select2 form-select">
+                                @{
+                                    foreach (var item in Model.ListAccount)
+                                    {
+                                        {
+                                            <option value="@item.AccountId">
+                                                @item.FullName
+                                            </option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-company">Address</label>
+                                <input type="text" class="form-control" name="address" id="basic-default-company" placeholder="ACME Inc.">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-email">Capacity</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="number" id="basic-default-email" name="capacity" class="form-control" placeholder="Capacity" aria-label="john.doe" aria-describedby="basic-default-email2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-email">City</label>
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="basic-default-email" name="city" class="form-control" placeholder="City" aria-label="john.doe" aria-describedby="basic-default-email2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-mb-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-phone">State</label>
+                                <input type="text" id="basic-default-phone" name="state" class="form-control phone-mask" placeholder="state">
+                            </div>
+                        </div>
+                        <div class="col-mb-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-phone">Country</label>
+                                <input type="text" id="basic-default-phone" name="country" class="form-control phone-mask" placeholder="Country">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-phone">Floors</label>
+                                <input type="number" min="1" id="basic-default-phone" name="floor" class="form-control phone-mask" placeholder="Floors">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-phone">Price</label>
+                                <input type="number" min="0" id="basic-default-phone" name="price" class="form-control phone-mask" placeholder="Price">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-phone">Construction Type</label>
+                                <select id="constructionType" name="constructionType" class="select2 form-select">
+                                    @{
+                                        foreach (var item in Model.ConstructionType)
+                                        {
+                                            {
+                                                <option value="@item.Key">
+                                                    @item.Value
+                                                </option>
+                                            }
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="basic-default-phone">Phone No</label>
-                        <input type="text" id="basic-default-phone" class="form-control phone-mask" placeholder="658 799 8941">
+                        <label class="form-label" for="basic-default-phone">Department Status</label>
+                        <select id="status" name="status" class="select2 form-select">
+                            @{
+                                foreach (var item in Model.Status)
+                                {
+                                    {
+                                        <option value="@item.Key">
+                                            @item.Value
+                                        </option>
+                                    }
+
+                                }
+                            }
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="basic-default-message">Message</label>
-                        <textarea id="basic-default-message" class="form-control" placeholder="Hi, Do you have a moment to talk Joe?"></textarea>
+                        <label class="form-label" for="basic-default-message">Description</label>
+                        <textarea id="basic-default-message" class="form-control" name="description" placeholder="Describe your department"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
                 </form>
             </div>
         </div>
