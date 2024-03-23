@@ -160,5 +160,29 @@ namespace APIDataAccess.Utils
                     return "UNAVAILABLE";
             }
         }
+        public static string ProjectStatusToString(int? status)
+        {
+            switch (status)
+            {
+                case 1:
+                    return "INACTIVE";
+                case 2:
+                    return "ACTIVE";
+                case 3:
+                    return "SUSPENDED";
+                case 4:
+                    return "CLOSURE";
+                case 5:
+                    return "PLANNING";
+                case 6:
+                    return "INITIATION";
+                
+                default:
+                    return "CANCELLED";
+            }
+        }
+       
+        
+
     }
 }

@@ -1,10 +1,25 @@
 ﻿@page
+@using APIDataAccess.Utils
 @model TimeshareUISolution.Pages.Project.IndexModel
 @{
     Layout = "_Layout_Admin";
 }
+<div style="padding: 20px;">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-style1">
+            <li class="breadcrumb-item">
+                <a href="javascript:void(0);">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="javascript:void(0);">Project</a>
+            </li>
+        </ol>
+    </nav>
+</div>
+
 <div class="dashboard">
     <div class="header">
+
         <h1>Projects</h1>
         <div class="tabs">
             <a href="#" class="active">All</a>
@@ -12,33 +27,40 @@
             <a href="#">On Hold</a>
             <a href="#">Closed</a>
         </div>
-       
+
     </div>
 
-    <div class="project-list">
-             
+    <div class="row">
+
         @{
             if (Model.projectViewModels != null && Model.projectViewModels.Any())
             {
-                foreach(var project in Model.projectViewModels)
-                {   
-                    <a href="/Projects/Edit?projectId=@project.ProjectId">
-                    <div class="project-card">
-                        <div class="project-icon">
-                            <img src="~/img/post-1.jpg" alt="Project Icon">
-                        </div>
-                        <h2>@project.ProjectName</h2>
-                        
-                        <h3>@project.ProjectCode</h3>
+                foreach (var project in Model.projectViewModels)
+                {
+                    <div class="col-md-4">
 
-                        <p>Start Date: @project.StartDate</p>
-                        <p>End Date: @project.EndDate</p>
-                        <span class="status">New</span>
+                        <a href="/Projects/Edit?projectId=@project.ProjectId">
+                            <div class="project-card ">
+                            <div>
+                                    <div class="project-icon">
+                                        <img src="~/img/post-1.jpg" alt="Project Icon">
+                                    </div>
+                            </div>
+                              <div style="margin-left :15px;">
+                                    <h5 style="font-size : 30px;">@project.ProjectName  </h5>
+                                    <p style="font-size : 25px;"> <strong>@project.ProjectCode</strong> </p>
+                                    <p>Start Date: @project.StartDate</p>
+                                    <p>End Date: @project.EndDate</p>
+                                    <span class="status">@DisplayUtils.ProjectStatusToString(project.Status ?? 0)</span>
+                              </div>  
+                               
+                            </div>
+                        </a>
                     </div>
-                    </a>
                 }
             }
         }
+
     </div>
 </div>
 
@@ -74,7 +96,6 @@
 
 
     .project-list {
-        display: flex;
         margin-top: 20px;
         background-color: #F3f4f5;
         border-radius: 20px;
@@ -82,28 +103,26 @@
     }
 
     .project-card {
-        background-color: #fff;
-        border-radius: 8px;
+        display: flex;
+      
+        padding: 20px;
+        border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        padding: 40px;
-        align-items: center;
-        transition: box-shadow 0.3s ease;
-        overflow: hidden;
+        background-color: #fff;
         margin-bottom: 20px;
-        border-radius: 20px;
     }
+
 
         .project-card:hover {
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Adjust the values as desired [1][2][3][4][5][6][7][8][9]*/
         }
+
     .project-icon img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%; /* Or any desired radius */
-        border: 2px solid #ccc; /* Adjust color as needed */
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 60%; /* Adjust to fit the width of the card */
+        height: auto; /* Maintain aspect ratio */
+        padding: 10px; /* Add some padding around the image */
+        border-radius: 10px; /* Optional: Add a border-radius for rounded corners */
+      
     }
 
 
@@ -130,7 +149,26 @@
         line-clamp: 2; /* Adjust the number of lines to show */
         overflow: hidden;
         text-overflow: ellipsis;
-        
     }
+
+    .project-row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .project-row .col-md-4 {
+            display: flex;
+            flex: 1;
+        }
+
+    .project-card {
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+    }
+
+        .project-card > div {
+            flex-grow: 1; /* Make the inner div fill the available space */
+        }
+
 
 </style>
