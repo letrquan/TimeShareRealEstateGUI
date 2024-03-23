@@ -1,0 +1,68 @@
+﻿@page
+@model TimeshareUISolution.Pages.UsageHistory.IndexModel
+@{
+Layout = "_Layout_Admin";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Usage History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="usage-history">
+        <table>
+            <thead>
+                <tr>
+                    <th>Usage Right ID</th>
+                    <th>Customer ID</th>
+                    <th>Reservation ID</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample row -->
+                <tr>
+                    <td>UR123</td>
+                    <td>CUST456</td>
+                    <td>RES789</td>
+                    <td>Active</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .usage-history {
+        width: 80%;
+        margin: 50px auto;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    th,
+</style>

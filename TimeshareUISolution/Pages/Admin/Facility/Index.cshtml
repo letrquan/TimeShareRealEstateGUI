@@ -27,7 +27,7 @@
         </select>
         <div class="rooms">
             <span>Room</span>
-            <a asp-route-number="@(IndexModel.CurrentPage == 1? 1 : IndexModel.CurrentPage - 1)">@(IndexModel.CurrentPage == 1 ? 1 : IndexModel.CurrentPage - 1)-</a>
+            <a asp-route-number="@(IndexModel.CurrentPage == 1? 1 : IndexModel.CurrentPage - 1)">-@(IndexModel.CurrentPage == 1 ? 1 : IndexModel.CurrentPage - 1)</a>
             <a asp-route-number="@IndexModel.CurrentPage" class="active">@IndexModel.CurrentPage</a>
             <a asp-route-number="@(IndexModel.CurrentPage + 1)">@(IndexModel.CurrentPage + 1)+</a>
         </div>
@@ -74,6 +74,15 @@
     </div>
 </div>
 
+<div class="centered-div">
+    <div class="pagination">
+        <a asp-route-number="@(IndexModel.CurrentPage - 1)">&laquo;</a>
+        <a asp-route-number="@IndexModel.CurrentPage" class="active">@IndexModel.CurrentPage</a>
+        <a asp-route-number="@(IndexModel.CurrentPage + 1)">&raquo;</a>
+    </div>
+</div>
+
+
 <script>
     let map;
 
@@ -89,6 +98,16 @@
     initMap();
 </script>
 <style>
+    .pagination a {
+        margin: 0 4px;
+    }
+
+    .centered-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 13vh; /* Chiều cao 100% của viewport */
+    }
     /* Reset and general styles */
     * {
         box-sizing: border-box;
