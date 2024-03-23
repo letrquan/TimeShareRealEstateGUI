@@ -1,7 +1,7 @@
 ﻿@page
 @model TimeshareUISolution.Pages.UsageHistory.IndexModel
 @{
-Layout = "_Layout_Admin";
+    Layout = "_Layout_Admin";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -16,21 +16,28 @@ Layout = "_Layout_Admin";
         <table>
             <thead>
                 <tr>
-                    <th>Usage Right ID</th>
                     <th>Customer ID</th>
-                    <th>Reservation ID</th>
+                    <th>Usage Right ID</th>
+                    <th>Check In Date</th>
+                    <th>Check Out Date</th>
                     <th>Status</th>
+                    <th>Department ID</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Sample row -->
-                <tr>
-                    <td>UR123</td>
-                    <td>CUST456</td>
-                    <td>RES789</td>
-                    <td>Active</td>
-                </tr>
-                <!-- Add more rows as needed -->
+                @{
+                    foreach (var usagehistory in Model.usageHistoryViewModels)
+                    {
+                        <tr>
+                            <td>@usagehistory.CustomerId</td>
+                            <td>@usagehistory.UsageId</td>
+                            <td>@usagehistory.CheckInDate</td>
+                            <td>@usagehistory.CheckOutDate</td>
+                            <td>@usagehistory.Status</td>
+                            <td>@usagehistory.DepartmentId</td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>

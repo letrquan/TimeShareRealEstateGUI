@@ -18,5 +18,6 @@ namespace APIDataAccess.Utils
         AvailableTime,
         Reservation,
         Notification,
+        UsageHistory,
     }
 }
