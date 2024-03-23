@@ -1,0 +1,230 @@
+﻿@page
+@using APIDataAccess.Utils
+@model TimeshareUISolution.Pages.Admin.Owner.CreateModel
+@{
+    Layout = "_Layout_Admin";
+}
+
+<div class="content-wrapper">
+    <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+        <!-- Sign Up Card -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Create Owner</h5>
+                <form method="post">
+                    <input type="text" name="OwnerId" value="0" hidden />
+                    @* <input type="hidden" name="departmentId" value="@Model.Owner.OwnerId" /> *@
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-floating mb-6">
+                                <input type="text" class="form-control" name="OwnerName" placeholder="Owner Name" value="">
+                                <label for="ownerName">Owner Name</label>
+                            </div>
+                        </div><div class="col-md-6">
+                            <div class="form-floating mb-6">
+                                <input type="text" class="form-control" name="ContactPerson" placeholder="Contact Person" value="">
+                                <label for="contactPerson">Contact Person</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-floating mb-6">
+                                <input type="text" class="form-control" name="Email" placeholder="Email" value="">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="phone" placeholder="Phone" value="">
+                                <label for="phone">Phone</label>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select id="status" name="status" class="select2 form-select">
+                                @{
+                                    foreach (var item in Model.Status)
+                                    {
+                                        if (item.Key == 0)
+                                        {
+                                            <option selected value="@item.Key">
+                                                @item.Value
+                                            </option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Key">
+                                                @item.Value
+                                            </option>
+                                        }
+
+                                    }
+                                }
+                            </select>
+                            <label for="status">Status</label>
+                        </div>
+
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary btn-signup w-100">Save</button>
+                </form>
+            </div>
+        </div>
+        <!-- Your existing sign-up form code goes here -->
+    </div>
+</div>
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .house-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .website-name {
+        margin-left: 5px;
+        font-size: 20px;
+        font-weight: bold;
+        color: forestgreen;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .card {
+        padding: 5px;
+        border-radius: 20px; /* Ensures consistent border-radius */
+        min-height: 500px;
+        width: 80%;
+    }
+
+    .card-title {
+        padding: 20px 0; /* Added padding to the top and bottom */
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .outer-card {
+        font-family: 'Poppins', sans-serif;
+        width: 70%;
+        padding: 40px; /* Space around the inner card */
+        border-radius: 25px; /* Larger radius for the outer card */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+        display: flex; /* Align inner card to the left */
+        align-items: center; /* Center inner card vertically */
+        justify-content: flex-start; /* Start alignment */
+        min-height: 60vh; /* Minimum height for outer card */
+    }
+
+    .card-container {
+        width: 50%; /* Adjust as needed */
+        height: 100%; /* Equal height */
+    }
+
+    .form-check .form-check-input {
+        width: 15px;
+        height: 15px;
+        margin-top: 0.3rem;
+        margin-left: 0;
+    }
+
+    .form-check-label {
+        font-size: 0.9rem;
+        margin-left: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        border-radius: 12px; /* Adjusts the roundness */
+        /* Optional additional styles for a consistent look */
+        border: 1px solid #ced4da;
+        padding: .375rem .75rem;
+    }
+
+    .btn-signup {
+        padding: 0.9rem 1.5rem; /* Larger top/bottom and left/right padding */
+        font-size: 1rem; /* Keeping the text size the same */
+        border-radius: 15px;
+    }
+
+    .sign-up-option {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: rgba(108, 117, 125, 0.5); /* Lighter text color with reduced opacity */
+        margin-top: 20px; /* Space above the text */
+        font-size: 0.9rem; /* Adjust the size as needed */
+        margin-bottom: 20px;
+    }
+
+        .sign-up-option::before,
+        .sign-up-option::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(108, 117, 125, 0.5); /* Lighter line color with reduced opacity */
+            margin: 0px 10px; /* Space between the text and lines */
+        }
+
+    .logo-button {
+        border: none;
+        border-radius: 50%; /* Makes the button circular */
+        width: 50px; /* Adjust as needed */
+        height: 50px; /* Adjust as needed */
+    }
+
+        .logo-button img {
+            width: 100%;
+            height: auto;
+        }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+    }
+
+</style>
+@if (TempData["successMessage"] != null)
+{
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: '@TempData["successMessage"]',
+            showConfirmButton: true,
+            timer: null,
+            allowOutsideClick: false
+        })
+    </script>
+}
+@if (TempData["errorMessage"] != null)
+{
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: '@TempData["errorMessage"]',
+            showConfirmButton: true,
+            timer: null,
+            allowOutsideClick: false
+        })
+    </script>
+}
