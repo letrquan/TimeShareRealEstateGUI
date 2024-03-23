@@ -1,6 +1,12 @@
+using APIDataAccess.DTO.ResponseModels;
+using APIDataAccess.DTO.ResponseModels.Helpers;
 using APIDataAccess.Services.IService;
+using APIDataAccess.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using static APIDataAccess.DTO.ResponseModels.Helpers.DynamicModelResponse;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TimeshareUISolution.Pages.Admin.AvaibleTime
 {
@@ -11,8 +17,55 @@ namespace TimeshareUISolution.Pages.Admin.AvaibleTime
         {
             _avableTimeService = avableTimeService;
         }
-        public void OnGet()
+        public static int CurrentPage { get; set; }
+        public static int TotalPage { get; set; }
+        public int PageSize { get; set; } = 6;
+        public List<AvailableTimeViewModel> AvaiableList { get; set; }
+        public void OnGet(int departmentId, string? number = null, string? filter = null)
         {
+            CurrentPage = int.Parse(number != null ? number : "1");
+
+            CurrentPage = (CurrentPage < 1) ? 1 : CurrentPage;
+            CurrentPage = (CurrentPage > TotalPage && TotalPage != 0 ? TotalPage : CurrentPage);
+            var userStr = HttpContext.Session.GetString("User");
+            if (userStr == null || userStr.Count() == 0)
+            {
+                RedirectToPage("/Admin/Login");
+            }
+            var user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
+            if (user == null)
+            {
+                RedirectToPage("/Admin/Login");
+            }
+            if (user.Value.Role != ((int)AccountRole.ADMIN) && user.Value.Role != ((int)AccountRole.STAFF))
+            {
+                RedirectToPage("/Admin/Login");
+            }
+            var response = _avableTimeService.GetModelAsync<DynamicModelsResponse<AvailableTimeViewModel>>(path: $"/GetListAvailableTime?DepartmentId={departmentId}" + filter + "&" + "page=" + CurrentPage + "&pageSize=" + PageSize, token: user.AccessToken).Result;
+            if (response.Item1 != null)
+            {
+                if (response.Item1 != null)
+                {
+                    AvaiableList = response.Item1.Results;
+                    CurrentPage = response.Item1.Metadata.Page;
+                }
+                else
+                {
+                    var errorMessage = response.Item1.Message;
+                    if (errorMessage != null)
+                    {
+                        RedirectToPage("/Admin/Department/Index");
+                    }
+                }
+            }
+            else
+            {
+                var errorMessage = response.Item2;
+                if (errorMessage != null)
+                {
+                    RedirectToPage("/Admin/Department/Index");
+                }
+            }
         }
     }
 }

@@ -4,3 +4,41 @@
     Layout = "_Layout_Admin";
 }
 
+<div class="content-wrapper">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-style1">
+                <li class="breadcrumb-item">
+                    <a href="javascript:void(0);">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="javascript:void(0);">Department</a>
+                </li>
+                <li class="breadcrumb-item active">Avaible Time</li>
+            </ol>
+        </nav>
+        @{
+
+            if (Model.AvaiableList != null && Model.AvaiableList.Count > 0)
+            {
+                foreach (var at in Model.AvaiableList)
+                {
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <div class="card-subtitle text-muted mb-3">Card subtitle</div>
+                            <p class="card-text">
+                                Some quick example text to build on the card title and make up the bulk of the card's content.
+                            </p>
+                            <a href="javascript:void(0)" class="card-link">Card link</a>
+                            <a href="javascript:void(0)" class="card-link">Another link</a>
+                        </div>
+                    </div>
+                }
+                
+            }
+        }
+    </div>
+</div>
