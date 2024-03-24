@@ -14,16 +14,14 @@
 
   // Total Revenue Report Chart - Bar Chart
   // --------------------------------------------------------------------
-  const totalRevenueChartEl = document.querySelector('#totalRevenueChart'),
-    totalRevenueChartOptions = {
-      series: [
+    const totalRevenueChartEl = document.querySelector('#totalRevenueChart');
+    const totalRevenueChartData = JSON.parse(totalRevenueChartEl.getAttribute('data-chartdata'));
+
+    const totalRevenueChartOptions = {
+        series: [
         {
-          name: '2021',
-          data: [18, 7, 15, 29, 18, 12, 9]
-        },
-        {
-          name: '2020',
-          data: [-13, -18, -9, -14, -5, -17, -15]
+                name: '2024',
+                data: totalRevenueChartData,
         }
       ],
       chart: {
@@ -420,15 +418,20 @@
 
   // Order Statistics Chart
   // --------------------------------------------------------------------
-  const chartOrderStatistics = document.querySelector('#orderStatisticsChart'),
-    orderChartConfig = {
+    const chartOrderStatistics = document.querySelector('#orderStatisticsChart');
+    const totalRevenueChartDatas = chartOrderStatistics.getAttribute('datas-chartdata');
+    const labelschartdata = chartOrderStatistics.getAttribute('labels-chartdata');
+
+
+    const s = "2";
+    const orderChartConfig = {
       chart: {
         height: 165,
         width: 130,
         type: 'donut'
       },
-      labels: ['Electronic', 'Sports', 'Decor', 'Fashion'],
-      series: [85, 15, 50, 50],
+        labels: labelschartdata,
+        series: totalRevenueChartDatas,
       colors: [config.colors.primary, config.colors.secondary, config.colors.info, config.colors.success],
       stroke: {
         width: 5,
