@@ -26,7 +26,7 @@ namespace TimeshareUISolution.Pages.Admin.StaffOfProject
         }
         public List<StaffOfProjectsViewModel> StaffOfProjectList { get; set; }
         public List<AccountViewModel> StaffList { get; set; }
-        public List<AccountViewModel> ProjectList { get; set; }
+        public List<ProjectViewModel> ProjectList { get; set; }
         public IActionResult OnGet(string? number = null, string? filter = null)
         {
             CurrentPage = int.Parse(number != null ? number : "1");
