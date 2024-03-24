@@ -37,6 +37,8 @@ builder.Services.AddAuthentication(options =>
 
     });
 
+builder.Services.AddHttpContextAccessor();
+
 #region AppStarts
 builder.Services.AddAutoMapper(typeof(AutoMapperResolver).Assembly);
 builder.Services.AddServices();

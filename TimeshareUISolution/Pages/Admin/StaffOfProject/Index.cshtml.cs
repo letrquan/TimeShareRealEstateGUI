@@ -1,26 +1,32 @@
 using APIDataAccess.DTO.ResponseModels;
 using APIDataAccess.DTO.ResponseModels.Helpers;
-using APIDataAccess.Services.Implements;
 using APIDataAccess.Services.IService;
 using APIDataAccess.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Net.NetworkInformation;
 using static APIDataAccess.DTO.ResponseModels.Helpers.DynamicModelResponse;
 
-namespace TimeshareUISolution.Pages.Admin.Owner
+namespace TimeshareUISolution.Pages.Admin.StaffOfProject
 {
     public class IndexModel : PageModel
     {
-        private readonly IOwnerService _service;
+        private readonly IStaffOfProjectService _service;
+        private readonly IAccountService _accountService;
+        private readonly IProjectService _projectService;
         public static int CurrentPage { get; set; }
         public static int TotalPage { get; set; }
         public int PageSize { get; set; } = 3;
-        public IndexModel(IOwnerService service)
+        public IndexModel(IStaffOfProjectService service, IAccountService accountService, IProjectService projectService)
         {
             _service = service;
+            _accountService = accountService;
+            _projectService = projectService;
         }
-        public List<OwnerViewModel> OwnerList { get; set; }
+        public List<StaffOfProjectsViewModel> StaffOfProjectList { get; set; }
+        public List<AccountViewModel> StaffList { get; set; }
+        public List<AccountViewModel> ProjectList { get; set; }
         public IActionResult OnGet(string? number = null, string? filter = null)
         {
             CurrentPage = int.Parse(number != null ? number : "1");
@@ -41,15 +47,14 @@ namespace TimeshareUISolution.Pages.Admin.Owner
             {
                 return RedirectToPage("/Admin/Login");
             }
-            var response = _service.GetModelAsync<DynamicModelsResponse<OwnerViewModel>>
-                (path: "/GetListOwner?OwnerName=" + filter + "&page=" + CurrentPage + "&pageSize=" + PageSize, token: user.AccessToken).Result;
+            var response = _service.GetModelAsync<DynamicModelsResponse<StaffOfProjectsViewModel>>
+                (path: $"/GetStaffOfProjects", token: user.AccessToken).Result;
 
-            TotalPage = (int)MathF.Ceiling((float)response.Item1.Metadata.Total / (float)response.Item1.Metadata.Size);
             if (response.Item1 != null)
             {
                 if (response.Item1 != null)
                 {
-                    OwnerList = response.Item1.Results;
+                    StaffOfProjectList = response.Item1.Results;
                 }
                 else
                 {
@@ -58,9 +63,18 @@ namespace TimeshareUISolution.Pages.Admin.Owner
                     {
                     }
                 }
+
+            }
+            var accountListResponse = _accountService.GetModelAsync<DynamicModelsResponse<AccountViewModel>>(path: $"/GetListAccount", token: user.AccessToken).Result;
+            if (accountListResponse.Item1 != null)
+            {
+                StaffList = accountListResponse.Item1.Results;
+                StaffList = StaffList.Where(c => c.Role.Equals(2)).ToList();
+            } else
+            {
+                StaffList = new();
             }
 
-            
             return Page();
         }
 

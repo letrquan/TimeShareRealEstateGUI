@@ -45,10 +45,7 @@ namespace TimeshareUISolution.Pages.Admin.Owner
                 {
                     Owner = response.Item1.Value;
                     var statusResponse = _service.GetModelAsync<EnumViewModel>(path: $"/GetOwnerStatus", token: user.AccessToken).Result;
-                    Status = statusResponse.Item1.Results;
-                    
-                    
-                    
+                    Status = statusResponse.Item1.Results;    
                     return Page();
                 }
                 else

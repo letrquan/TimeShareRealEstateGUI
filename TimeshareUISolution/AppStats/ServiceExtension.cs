@@ -16,6 +16,7 @@ namespace TimeshareUISolution.AppStats
             services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IUsageHistoryService, UsageHistoryService>();
+            services.AddScoped<IStaffOfProjectService, StaffOfProjectService>();
         }
     }
 }

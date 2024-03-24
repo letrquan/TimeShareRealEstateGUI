@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace APIDataAccess.Services.Implements
 {
-    public class ProjectService : BaseService, IProjectService
+    public class StaffOfProjectService : BaseService, IStaffOfProjectService
     {
-        public ProjectService(IHttpClientFactory clientFactory) : base(clientFactory)
+        public StaffOfProjectService(IHttpClientFactory clientFactory) : base(clientFactory)
         {
             Path = StoredURI.Project;
         }
 
     }
-    
 }
