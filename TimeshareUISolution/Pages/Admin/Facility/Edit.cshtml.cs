@@ -62,8 +62,7 @@ namespace TimeshareUISolution.Pages.Admin.Facility
                     }
                     else
                     {
-                        TempData["errorMessage"] = "Server error";
-                        return RedirectToPage("/Admin/Facility/Index");
+                        Enum = new();
                     }
                     var departmentResponse = _departmentService.GetModelAsync<ResponseResult<DepartmentViewModel>>(path: $"/GetDepartment/{Facility.DepartmentId.ToString()}", token: user.AccessToken).Result;
                     if (departmentResponse.Item1 != null)
@@ -98,8 +97,7 @@ namespace TimeshareUISolution.Pages.Admin.Facility
                     }
                     else
                     {
-                        TempData["errorMessage"] = "Server error";
-                        return RedirectToPage("/Admin/Facility/Index");
+                        DepartmentList = new();
                     }
                     return Page();
                 }

@@ -8,38 +8,6 @@
 
 <h3 class="card-header">Owners</h3>
 
-<div class="search-bar">
-    <div class="card location">
-        <span>Search in</span>
-        <select>
-            <option>Cleveland</option>
-        </select>
-    </div>
-    <div class="card search-input">
-        <input type="text" placeholder="Enter an address, city or ZIP code">
-    </div>
-    <div class="filters">
-        <select>
-            <option>For sale</option>
-        </select>
-        <select>
-            <option>Type Apartment</option>
-        </select>
-        <div class="rooms">
-            <span>Room</span>
-            <a asp-route-number="@IndexModel.CurrentPage" class="active">@IndexModel.CurrentPage</a>
-            <a asp-route-number="@(IndexModel.CurrentPage + 1)">@(IndexModel.CurrentPage + 1)+</a>
-        </div>
-        <div class="price-range">
-            <select>
-                <option>Min Price: $500k</option>
-            </select>
-            <select>
-                <option>Max Price: $700k</option>
-            </select>
-        </div>
-    </div>
-</div>
 
 <div class="results">
     <div class="best-options">

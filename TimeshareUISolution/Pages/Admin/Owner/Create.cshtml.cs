@@ -68,31 +68,25 @@ namespace TimeshareUISolution.Pages.Admin.Owner
                 Status = int.Parse(Request.Form["status"]),
 
             };
-            var response = _service.PostWithResponse<OwnerViewModel, OwnerRequestModel>(create, path: $"/CreateOwner/{create}", token: user.AccessToken);
-            if (response != null)
+            var response = _service.PostWithResponse<ResponseResult<OwnerViewModel>, OwnerRequestModel>(create, path: "/CreateOwner", user.AccessToken).Result;
+            if (response.Item1 != null)
             {
-                if (response.IsCompletedSuccessfully == true)
+                if (response.Item1.Value != null)
                 {
-                    TempData["successMessage"] = response.Result;
-                    return RedirectToPage("./Index");
-
-                    // return Redirect($"/Admin/Owner/Create?OwnerId={ownerId}");
+                    TempData["successMessage"] = response.Item1.Message;
+                    return RedirectToPage("/Admin/Owner/Index");
                 }
                 else
                 {
-                    
-                    TempData["errorMessage"] = response.Result;
-                    var statusResponse = _service.GetModelAsync<EnumViewModel>(path: $"/GetOwnerStatus", token: user.AccessToken).Result;
-                    Status = statusResponse.Item1.Results;
+                    TempData["errorMessage"] = response.Item1.Message;
+                    OnGet();
                     return Page();
                 }
             }
             else
             {
-                
                 TempData["errorMessage"] = "Server error";
-                var statusResponse = _service.GetModelAsync<EnumViewModel>(path: $"/GetOwnerStatus", token: user.AccessToken).Result;
-                Status = statusResponse.Item1.Results;
+                OnGet();
                 return Page();
             }
         }
