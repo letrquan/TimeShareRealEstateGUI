@@ -1,4 +1,6 @@
-﻿namespace APIDataAccess.DTO.ResponseModels
+﻿using APIDataAccess.Utils;
+
+namespace APIDataAccess.DTO.ResponseModels
 {
     public class ContractViewModel
     {
@@ -17,5 +19,10 @@
         public decimal? CommissionAmount { get; set; }
         public int? NumberYears { get; set; }
         public int? NumberMonths { get; set; }
+        public string? ProjectName { get; set; }
+        public int? DepartmentContructionType { get; set; }
+        public string? DepartmentContructionTypeName { get; set; }
+
+
     }
 }
