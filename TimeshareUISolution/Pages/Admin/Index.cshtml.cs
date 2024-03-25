@@ -5,6 +5,7 @@ using APIDataAccess.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace TimeshareUISolution.Pages.Admin
 {
@@ -13,6 +14,9 @@ namespace TimeshareUISolution.Pages.Admin
         public static DashboardResponse<int> Results { get; set; }   
         public ICollection<ContractViewModel> Contracts { get; set; }
         public Dictionary<string, decimal> DashboardContructionType { get; set; }
+        public Dictionary<string, decimal> DashboardProjectName { get; set; }
+        public string[] NameContructionType { get; set; }
+        public ICollection<float> ValueContructionType { get; set; }
         public IActionResult OnGet()
         {
             UserLoginResponse user = GetUserLogin();
@@ -36,6 +40,18 @@ namespace TimeshareUISolution.Pages.Admin
             UserLoginResponse user = GetUserLogin();
             var data = HelperFeature.Instance.CallApiAsync("https://localhost:7246/api/Dashboard/GetRevenueContructionTypeName", user.AccessToken).Result;
             DashboardContructionType = JsonConvert.DeserializeObject<DashboardResponse<string>>(data).Values;
+
+            NameContructionType = DashboardContructionType.Keys.ToArray();
+            var sum = DashboardContructionType.Values.Sum();
+            ValueContructionType =  DashboardContructionType.Values.Select(x => (float)Math.Round((float)x / (float)sum * 100, 3) ).ToList();
+
+            return OnGetDashboardProjectName();
+        }
+        public IActionResult OnGetDashboardProjectName()
+        {
+            UserLoginResponse user = GetUserLogin();
+            var data = HelperFeature.Instance.CallApiAsync("https://localhost:7246/api/Dashboard/GetRevenueProjectName", user.AccessToken).Result;
+            DashboardProjectName = JsonConvert.DeserializeObject<DashboardResponse<string>>(data).Values;
             return Page();
         }
 

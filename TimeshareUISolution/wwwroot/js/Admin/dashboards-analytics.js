@@ -419,8 +419,8 @@
   // Order Statistics Chart
   // --------------------------------------------------------------------
     const chartOrderStatistics = document.querySelector('#orderStatisticsChart');
-    const totalRevenueChartDatas = chartOrderStatistics.getAttribute('datas-chartdata');
-    const labelschartdata = chartOrderStatistics.getAttribute('labels-chartdata');
+    const totalRevenueChartDatas = JSON.parse(chartOrderStatistics.getAttribute('datas-chartdata'));
+    const labelschartdata = 0(chartOrderStatistics.getAttribute('labels-chartdata'));
 
 
     const s = "2";
@@ -430,7 +430,7 @@
         width: 130,
         type: 'donut'
       },
-        labels: labelschartdata,
+        labels: ['gfsads', 'jyhtgrefdws', 'ahtgfsdas'],
         series: totalRevenueChartDatas,
       colors: [config.colors.primary, config.colors.secondary, config.colors.info, config.colors.success],
       stroke: {
@@ -440,7 +440,7 @@
       dataLabels: {
         enabled: false,
         formatter: function (val, opt) {
-          return parseInt(val) + '%';
+            return parseFloat(val) + '%';
         }
       },
       legend: {
@@ -465,7 +465,7 @@
                 color: headingColor,
                 offsetY: -15,
                 formatter: function (val) {
-                  return parseInt(val) + '%';
+                    return parseFloat(val) + '%';
                 }
               },
               name: {
