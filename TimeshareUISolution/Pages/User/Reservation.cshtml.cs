@@ -35,7 +35,8 @@ namespace TimeshareUISolution.Pages.User
             }
             if (user.Value.Role != ((int)AccountRole.CUSTOMER))
             {
-                return RedirectToPage("/");
+                TempData["ErrorMessage"] = "Only Customer can access this page";
+                return RedirectToPage("/User/Index");
             }
             if (pageNumber <= 0 || pageNumber == null)
             {

@@ -100,7 +100,6 @@
                                         <strong>Capacity:</strong>
                                         <span>
                                             @Model.Property.Capacity
-                                            <sup>2</sup>
                                         </span>
                                     </li>
                                     <li class="d-flex justify-content-between">
@@ -135,33 +134,36 @@
                             <form method="post">
                                 <input type="hidden" name="departmentId" value="@Model.Property.DepartmentId"/>
                                 <div class="form-floating mb-3">
-                                    <select id="avableTimeId" name="avableTimeId" class="select2 form-select">
-                                        @{
-                                            foreach (var item in Model.AvailableTimeList)
-                                            {
-                                                if (item.Status == 1)
-                                                {
-                                                    <option value="@item.AvailableTimeId">Start Date: @item.StartDate.Value.Date - End Date: @item.EndDate.Value.Date</option>
+                                    @{
+                                        var fee = Model.Property.Price * (decimal)0.1;
+                                        if(Model.AvailableTimeList.Count == 0)
+                                        {
+                                            <h4 class="icon-title">Can't found avaible time</h4>
+                                        }else{
+                                            <select id="avableTimeId" name="avableTimeId" class="select2 form-select">
+                                                @{
+                                                    foreach (var item in Model.AvailableTimeList)
+                                                    {
+                                                        if (item.Status == 1)
+                                                        {
+                                                            <option value="@item.AvailableTimeId">Start Date: @item.StartDate.Value.Date - End Date: @item.EndDate.Value.Date</option>
+                                                        }
+
+                                                    }
                                                 }
-
-                                            }
+                                            </select>
+                                            <div class="form-floating mb-3">
+                                                <p class="color-text-a">
+                                                    Reservation Fee
+                                                </p>
+                                                <input type="text" value="@fee.Value.ToString("0.##")" disabled style="width:100px;" /> <span>VND</span>
+                                                <input type="hidden" name="reservationFee" value="@fee" />
+                                            </div>
+                                            <button type="submit" class="btn btn-a">Book Now</button>
                                         }
-                                    </select>
-                                </div>
-                                @{
-                                    var fee = Model.Property.Price * (decimal)0.1;
-                                }
-                                <div class="form-floating mb-3">
-                                    <p class="color-text-a">
-                                        Reservation Fee
-                                    </p>
-                                    <input type="text" value="@fee.Value.ToString("0.##")" disabled style="width:100px;"/> <span>VND</span>
-                                    <input type="hidden" name="reservationFee" value="@fee"/>
-                                </div>
-                                <button type="submit" class="btn btn-a">Book Now</button>
+                                    }                                    
+                                </div>    
                             </form>
-
-
                         </div>
                     </div>
                 </div>

@@ -33,11 +33,11 @@
                     <form method="post" asp-page-handler="Create">
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label class="form-label" for="basic-default-fullname">Start Date</label>
+                                <label class="form-label" for="basic-default-fullname">From</label><br/>
                                 <input type="datetime-local" id="dateTimeInput" name="StartDate"/>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="basic-default-fullname">End Date</label>
+                                <label class="form-label" for="basic-default-fullname">To</label><br />
                                 <input type="datetime-local" id="dateTimeInput" name="EndDate"/>
                             </div>
                             <input type="hidden" name="departmentId" value="@Model.AvaiableList[0].DepartmentId" />
