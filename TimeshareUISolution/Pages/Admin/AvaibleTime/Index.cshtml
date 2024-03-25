@@ -40,6 +40,10 @@
                                 <label class="form-label" for="basic-default-fullname">To</label><br />
                                 <input type="datetime-local" id="dateTimeInput" name="EndDate"/>
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-default-fullname">Department Project Code</label><br />
+                                <input type="datetime-local" id="dateTimeInput" name="projectCode"/>
+                            </div>
                             <input type="hidden" name="departmentId" value="@Model.AvaiableList[0].DepartmentId" />
                         </div>
                         <div class="modal-footer">
@@ -63,7 +67,6 @@
                                     <h5 class="card-title">@DisplayUtils.AvailableTimeStatusToString(at.Status)</h5>
                                     <p class="card-text">Start Date: @at.StartDate.Value.Date</p>
                                     <p class="card-text">End Date: @at.EndDate.Value.Date</p>
-                                    <a href="#" class="btn btn-primary" data-mdb-ripple-init>Edit</a>
                                     <a class="btn btn-danger" data-mdb-ripple-init onclick="deleteBtn(@at.AvailableTimeId, @at.DepartmentId)">Delete</a>
                                 </div>
                             </div>

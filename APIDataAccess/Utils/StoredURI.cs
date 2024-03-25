@@ -19,5 +19,6 @@ namespace APIDataAccess.Utils
         Reservation,
         Notification,
         UsageHistory,
+        StaffOfProject,
     }
 }
