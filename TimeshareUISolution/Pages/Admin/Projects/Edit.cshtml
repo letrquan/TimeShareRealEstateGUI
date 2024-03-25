@@ -16,7 +16,7 @@
                     <input type="hidden" name="projectId" value="@Model.Project.ProjectId" />
                     <div class="mb-3">
                         <label class="form-label" for="basic-default-fullname">Project Name</label>
-                        <input type="text" class="form-control" id="basic-default-fullname" placeholder="Project Name" value="@Model.Project.ProjectName"/>
+                        <input type="text" class="form-control" name="projectName" id="basic-default-fullname" placeholder="Project Name" value="@Model.Project.ProjectName" />
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="basic-default-prioritytype">Priority Type</label>
@@ -44,19 +44,18 @@
 
                     <div class="mb-3">
                         <label class="form-label" for="basic-default-projectcode">Project Code</label>
-                        <input type="text" class="form-control" id="basic-default-projectcode" placeholder="Project Code" />
+                        <input type="text" class="form-control" name="code" id="basic-default-projectcode" value="@Model.Project.ProjectCode"/>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="basic-default-totalSlot">Total slot</label>
-                        <input type="text" class="form-control" id="basic-default-totalSlot" placeholder="Total Slot" />
+                        <input type="number" min="0" class="form-control" name="totalSlot" id="basic-default-totalSlot" placeholder="Total Slot" value="@Model.Project.TotalSlot"/>
                     </div>
                     <div class="mb-3 row">
                         <label for="html5-startday-local-input" class="col-md-2 col-form-label">Start Day</label>
                         <div class="col-md-10">
                             <input class="form-control"
                                    type="datetime-local"
-                                   value="2021-06-18T12:30:00"
-                                   id="html5-startday-local-input" />
+                                   name="startDate" value="@Model.Project.StartDate.Value.ToString("yyyy-MM-ddTHH:mm:ss")" id="html5-startday-local-input" />
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -64,8 +63,9 @@
                         <div class="col-md-10">
                             <input class="form-control"
                                    type="datetime-local"
-                                   value="2021-06-18T12:30:00"
-                                   id="html5-endday-local-input" />
+                                   name="endDate"
+                                   id="html5-endday-local-input" 
+                                   value="@Model.Project.EndDate.Value.ToString("yyyy-MM-ddTHH:mm:ss")" />
                         </div>
                     </div>
                     <div class="form-floating mb-3">
@@ -97,7 +97,8 @@
                         <div class="col-md-10">
                             <input class="form-control"
                                    type="datetime-local"
-                                   value="2021-06-18T12:30:00"
+                                   name="openDate"
+                                   value="@Model.Project.RegistrationOpeningDate.Value.ToString("yyyy-MM-ddTHH:mm:ss")"
                                    id="html5-registrationOpeningDate-local-input" />
                         </div>
                     </div>
@@ -106,7 +107,8 @@
                         <div class="col-md-10">
                             <input class="form-control"
                                    type="datetime-local"
-                                   value="2021-06-18T12:30:00"
+                                   name="regisEndDate"
+                                   value="@Model.Project.RegistrationEndDate.Value.ToString("yyyy-MM-ddTHH:mm:ss")"
                                    id="html5-registrationEndDate-local-input" />
                         </div>
                     </div>

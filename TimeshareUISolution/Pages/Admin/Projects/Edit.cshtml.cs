@@ -12,11 +12,11 @@ namespace TimeshareUISolution.Pages.Projects
     public class EditModel : PageModel
     {
         private readonly IProjectService _service;
-      
+
         public EditModel(IProjectService service)
         {
             _service = service;
-           
+
         }
         public ProjectViewModel Project { get; set; }
         public Dictionary<int, string> Enum { get; set; }
@@ -53,7 +53,6 @@ namespace TimeshareUISolution.Pages.Projects
                         else
                         {
                             TempData["errorMessage"] = enumResponse.Item1.Message;
-                            return RedirectToPage("/Projects/Index");
                         }
                         var statusResponse = _service.GetModelAsync<EnumViewModel>(path: $"/GetProjectStatus", token: user.AccessToken).Result;
                         if (statusResponse.Item1 != null)
@@ -65,37 +64,33 @@ namespace TimeshareUISolution.Pages.Projects
                             else
                             {
                                 TempData["errorMessage"] = statusResponse.Item1.Message;
-                                return RedirectToPage("/Projects/Index");
                             }
                         }
                         else
                         {
                             TempData["errorMessage"] = statusResponse.Item1.Message;
-                            return RedirectToPage("/Projects/Index");
                         }
                     }
                     else
                     {
                         TempData["errorMessage"] = "Server error";
-                        return RedirectToPage("/Projects/Index");
-                    }                   
+                    }
                     return Page();
                 }
                 else
                 {
                     TempData["errorMessage"] = "Server error";
-                    return RedirectToPage("/Projects/Index");
                 }
             }
             else
             {
                 TempData["errorMessage"] = "Server error";
-                return RedirectToPage("/Projects/Index");
             }
+            return RedirectToPage("/Admin/Projects/Index");
         }
 
         //onpost 
-        public IActionResult OnPost(int projectId,string projectName , int priorityType , string projectCode,int totalSlot , DateTime startDay , DateTime endDay , int status , DateTime registrationOpeningDate , DateTime registrationEndDate)
+        public IActionResult OnPost(int projectId, string projectName, int priorityType, string code, int totalSlot, DateTime startDate, DateTime endDate, int status, DateTime openDate, DateTime regisEndDate)
         {
 
             var userStr = HttpContext.Session.GetString("User");
@@ -112,27 +107,33 @@ namespace TimeshareUISolution.Pages.Projects
             {
                 RedirectToPage("/Admin/Login");
             }
+            if(endDate <= startDate || openDate >= regisEndDate)
+            {
+                TempData["errorMessage"] = "Date invalid";
+                OnGet(projectId.ToString());
+                return Page();
+            }
             var update = new ProjectRequestModel
             {
                 /*ProjectId = projectId,*/
                 ProjectName = projectName,
                 PriorityType = priorityType,
-                ProjectCode = projectCode,
+                ProjectCode = code,
                 TotalSlot = totalSlot,
-                StartDate = startDay,
-                EndDate = endDay,
+                StartDate = startDate,
+                EndDate = endDate,
                 Status = status,
-                RegistrationOpeningDate = registrationOpeningDate,
-                RegistrationEndDate = registrationEndDate
+                RegistrationOpeningDate = openDate,
+                RegistrationEndDate = regisEndDate
             };
-var response = _service.Put<ProjectRequestModel,ProjectViewModel>(update, path: $"/UpdateProject/{projectId}", token: user.AccessToken).Result;
+            var response = _service.Put<ProjectRequestModel, ProjectViewModel>(update, path: $"/UpdateProject/{projectId}", token: user.AccessToken).Result;
 
-            if(response != null)
+            if (response != null)
             {
-                if(response.result == true)
+                if (response.result == true)
                 {
                     TempData["successMessage"] = response.Message;
-                    return Redirect($"//Projects/Edit?projectId={projectId}");
+                    return Redirect($"/Admin/Projects/Edit?projectId={projectId}");
                 }
                 else
                 {
@@ -153,7 +154,7 @@ var response = _service.Put<ProjectRequestModel,ProjectViewModel>(update, path: 
         }
 
 
-        
+
 
 
     }

@@ -108,7 +108,7 @@ namespace TimeshareUISolution.Pages.Admin.AvaibleTime
             OnGet(departmentId);
             return Page();
         }
-        public IActionResult OnPostCreate(int departmentId)
+        public IActionResult OnPostCreate(int departmentId, string projectCode)
         {
             var userStr = HttpContext.Session.GetString("User");
             if (userStr == null || userStr.Count() == 0)
@@ -129,7 +129,7 @@ namespace TimeshareUISolution.Pages.Admin.AvaibleTime
                 StartDate = StartDate,
                 EndDate = EndDate,
                 Status = (int?)AvailableStatus.AVAILABLE,
-                DepartmentProjectCode = null
+                DepartmentProjectCode = projectCode
             };
             var create = _avableTimeService.PostWithResponse<ResponseResult<AvailableTimeViewModel>, AvailableTimeRequestModel>(creatAvaibleTime , path: $"/CreateAvailableTime", token: user.AccessToken).Result;
             if (create.Item1 != null)
