@@ -12,7 +12,7 @@ namespace APIDataAccess.Services.Implements
     {
         public StaffOfProjectService(IHttpClientFactory clientFactory) : base(clientFactory)
         {
-            Path = StoredURI.Project;
+            Path = StoredURI.StaffOfProject;
         }
 
     }
