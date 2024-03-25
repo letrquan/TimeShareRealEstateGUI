@@ -9,9 +9,9 @@
 
 <h3 class="card-header">StaffOfProjects</h3>
 
-<form>
+<form asp-page-handler="StaffId" method="post">
     <div class="form-floating mb-3">
-        <select id="staffList" name="staffList" class="select2 form-select">
+        <select id="staffId" name="staffId" class="select2 form-select">
             @{
                 foreach (var item in Model.StaffList)
                 {
@@ -23,8 +23,11 @@
             }
         </select>
         <label for="staffList">Staff List</label>
+        <button class="btn btn-secondary" type="submit">
+            <i class="bi bi-search"></i>Search
+        </button>
     </div>
-    <input type="submit" value="Search"/>
+    
 </form>
 
 
@@ -37,10 +40,8 @@
                 {
                     <a href="/Admin/StaffOfProject/Edit?staffOfProjectId=@staffOfProject.StaffId">
                         <div class="property-card">
-                            <div class="property-details">
-                                <h5>@staffOfProject.StaffName</h5>
-                                <h4>@staffOfProject.ProjectId</h4>
-                            </div>
+                            <h5>StaffId: @staffOfProject.StaffId</h5><br />
+                            <h4>ProjectId: @staffOfProject.ProjectId</h4>
                         </div>
                     </a>
                 }

@@ -25,7 +25,7 @@ namespace TimeshareUISolution.Pages.Admin.StaffOfProject
             _projectService = projectService;
         }
         public List<StaffOfProjectsViewModel> StaffOfProjectList { get; set; }
-        public List<AccountViewModel> StaffList { get; set; }
+        public List<AccountViewModel> StaffList { get; set; } = new();
         public List<ProjectViewModel> ProjectList { get; set; }
         public IActionResult OnGet(string? number = null, string? filter = null)
         {
@@ -47,14 +47,40 @@ namespace TimeshareUISolution.Pages.Admin.StaffOfProject
             {
                 return RedirectToPage("/Admin/Login");
             }
+
+            var accountListResponse = _accountService.GetModelAsync<DynamicModelsResponse<AccountViewModel>>(path: $"/GetListAccount", token: user.AccessToken).Result;
+            if (accountListResponse.Item1 != null)
+            {
+                StaffList = accountListResponse.Item1.Results;
+                StaffList = StaffList.Where(c => c.Role.Equals(2)).ToList();
+                StaffList ??= new();
+            }
+            else
+            {
+                StaffList = new();
+            }
             var response = _service.GetModelAsync<DynamicModelsResponse<StaffOfProjectsViewModel>>
                 (path: $"/GetStaffOfProjects", token: user.AccessToken).Result;
-
+            //if (!string.IsNullOrEmpty(filter))
+            //{
+            //    response = _service.GetModelAsync<DynamicModelsResponse<StaffOfProjectsViewModel>>
+            //    (path: $"/GetStaffOfProject?StaffId=" + filter, token: user.AccessToken).Result;
+            //}
+            
+            
             if (response.Item1 != null)
             {
                 if (response.Item1 != null)
                 {
                     StaffOfProjectList = response.Item1.Results;
+                    if (!string.IsNullOrEmpty(filter))
+                    {
+                        StaffOfProjectList = StaffOfProjectList.Where(c => c.StaffId == int.Parse(filter)).ToList();
+                        if (StaffOfProjectList == null)
+                        {
+                            StaffOfProjectList = new();
+                        }
+                    }
                 }
                 else
                 {
@@ -65,22 +91,39 @@ namespace TimeshareUISolution.Pages.Admin.StaffOfProject
                 }
 
             }
+            
+
+            return Page();
+        }
+
+        public IActionResult OnPostStaffId()
+        {
+            var userStr = HttpContext.Session.GetString("User");
+            if (userStr == null || userStr.Count() == 0)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            var user = JsonConvert.DeserializeObject<UserLoginResponse>(userStr);
+            if (user == null)
+            {
+                return RedirectToPage("/Admin/Login");
+            }
+            if (user.Value.Role != ((int)AccountRole.ADMIN) && user.Value.Role != ((int)AccountRole.STAFF))
+            {
+                return RedirectToPage("/Admin/Login");
+            }
             var accountListResponse = _accountService.GetModelAsync<DynamicModelsResponse<AccountViewModel>>(path: $"/GetListAccount", token: user.AccessToken).Result;
             if (accountListResponse.Item1 != null)
             {
                 StaffList = accountListResponse.Item1.Results;
                 StaffList = StaffList.Where(c => c.Role.Equals(2)).ToList();
-            } else
+                StaffList ??= new();
+            }
+            else
             {
                 StaffList = new();
             }
-
-            return Page();
-        }
-
-        public IActionResult OnPostSearch()
-        {
-            return OnGet(filter: Request.Form["search"]);
+            return OnGet(filter: Request.Form["staffId"]);
         }
     }
 }

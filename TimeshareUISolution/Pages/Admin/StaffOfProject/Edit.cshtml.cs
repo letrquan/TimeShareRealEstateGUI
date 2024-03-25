@@ -29,7 +29,7 @@ namespace TimeshareUISolution.Pages.Admin.StaffOfProject
         public List<ProjectViewModel> ProjectList { get; set; }
 
         public StaffOfProjectRequestModel Staff {  get; set; }
-        public IActionResult OnGet()
+        public IActionResult OnGet(int staffId, int projectid)
         {
             var userStr = HttpContext.Session.GetString("User");
             if (userStr == null || userStr.Count() == 0)
@@ -64,7 +64,7 @@ namespace TimeshareUISolution.Pages.Admin.StaffOfProject
             {
                 ProjectList = new();
             }
-                return Page();
+            return Page();
         }
     }
 }
